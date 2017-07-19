@@ -18,8 +18,6 @@ class Bullet (pygame.sprite.Sprite) :
         x, y = tank.getPosition()
         self.__setStartPosition( x, y )
 
-
-
     def __setStartPosition( self, x, y ) :
         self.rect.x = x*setting.BLOCK_SIZE + setting.BLOCK_SIZE / 2 - self.rect.width / 2
         self.rect.y = y*setting.BLOCK_SIZE + setting.BLOCK_SIZE / 2 - self.rect.height / 2
@@ -58,12 +56,11 @@ class Bullet (pygame.sprite.Sprite) :
         if self.__owner_name == tank.getName() :
             return False
 
-        return pygame.sprite.collide(self, tank)
+        return pygame.sprite.collide_rect(self, tank)
 
-    def update( self, game ) :
+    def update(self) :
         self.rect.x += self.__speed_x/setting.FPS#*game.getDeltaTime()
         self.rect.y += self.__speed_y/setting.FPS#*game.getDeltaTime()
-        print(self.rect.x, self.rect.y)
         if self.__isOutOfMap() :
             self.kill()
 
@@ -78,7 +75,7 @@ class Bullet (pygame.sprite.Sprite) :
 class Bullet_Heal(Bullet):
     def __init__( self, tank, direction, *group) :
         heal_path = ""
-        super().__init__( tank, direction, "bullet.png" ,-5, 60, *group) #add
+        super().__init__( tank, direction, "heart.png" ,-5, 60, *group) #add
 
 
 class Bullet_Damage(Bullet):

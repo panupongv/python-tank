@@ -28,14 +28,11 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-
-    def getDeltaTime(self) :
-        return time.time() - self.__time_last_frame
                 
     def main(self):
         while True:
             self.screen.blit(self.background, [0, 0])
-            self.sprite_list.update(self)
+            self.sprite_list.update()
             self.sprite_list.draw(self.screen)
             pygame.display.update()
             
