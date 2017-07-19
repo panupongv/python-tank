@@ -1,7 +1,7 @@
 import pygame
 
-from constants import *
-from bullet import Bullet_Heal, Bullet_Damage
+from core.constants import *
+from core.bullet import Bullet_Heal, Bullet_Damage
 
 class Tank(pygame.sprite.Sprite):
     def __init__(self, game, name, team_color, x, y, direction, *group):

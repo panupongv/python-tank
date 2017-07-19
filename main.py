@@ -2,7 +2,7 @@ import pygame
 import time
 import sys
 
-from Tank import *
+from core.tank import *
 
 class Game:
     def __init__(self):
