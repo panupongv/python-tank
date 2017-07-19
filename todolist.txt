@@ -1,0 +1,12 @@
+[done]
+modulize
+hidden update
+
+[todo]
+hp mp bar
+4head tank
+position detection methods with encapsulation
+new main
+2 mode main ( for battle and for training )
+adjust game rules
+cleanup workspace for kiddos(do last)
