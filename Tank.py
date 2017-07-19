@@ -12,10 +12,10 @@ class Tank(pygame.sprite.Sprite):
         
         self.__team_color = team_color
         self.__name = name
-        self.images = [pygame.image.load(team_color + "_tank_left.png"),
-                       pygame.image.load(team_color + "_tank_right.png"),
-                       pygame.image.load(team_color + "_tank_up.png"),
-                       pygame.image.load(team_color + "_tank_down.png"),]
+        self.images = [pygame.image.load('source/' + team_color + "_tank_left.png"),
+                       pygame.image.load('source/' + team_color + "_tank_right.png"),
+                       pygame.image.load('source/' + team_color + "_tank_up.png"),
+                       pygame.image.load('source/' + team_color + "_tank_down.png"),]
         self.__direction = direction
         self.image = self.images[self.__getIndex()]
         self.rect = self.image.get_rect()

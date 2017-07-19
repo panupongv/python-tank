@@ -74,13 +74,13 @@ class Bullet (pygame.sprite.Sprite) :
 
 class Bullet_Heal(Bullet):
     def __init__( self, tank, direction, *group) :
-        heal_path = ""
-        super().__init__( tank, direction, "heart.png" ,-5, 60, *group) #add
+        damage = -5
+        speed = 60
+        super().__init__( tank, direction, "source/heart.png", damage, speed, *group) #add
 
 
 class Bullet_Damage(Bullet):
     def __init__( self, tank, direction, *group) :
-        damage_path = ""
-        super().__init__( tank, direction, "bullet.png" , 10, 180, *group) #add
+        super().__init__( tank, direction, "source/bullet.png", damage, speed, *group) #add
 
         

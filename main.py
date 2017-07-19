@@ -10,7 +10,7 @@ class Game:
         pygame.display.set_caption("Tank game")
         pygame.mixer.init()
 
-        self.background = pygame.image.load("bg.png")
+        self.background = pygame.image.load("source/bg.png")
         self.clock = pygame.time.Clock()
         self.screen = pygame.display.set_mode([650, 650])
         
