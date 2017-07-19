@@ -1,8 +1,8 @@
 import pygame
 import time
-import sys
 
-from core.tank import *
+from core.tank import TankPrototype
+from core.constants import *
 
 class Game:
     def __init__(self):
@@ -18,7 +18,7 @@ class Game:
         self.tank_list = pygame.sprite.Group()
         self.bullet_list = pygame.sprite.Group()
         
-        tank1 = Tank(self, 1, "green", 0, 0, "right", self.sprite_list, self.tank_list)
+        tank1 = TankPrototype(self, 1, "green", 0, 0, "right", self.sprite_list, self.tank_list)
 
         self.__time_last_frame = -1
 

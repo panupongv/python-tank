@@ -3,9 +3,9 @@ import pygame
 from core.constants import *
 from core.bullet import Bullet_Heal, Bullet_Damage
 
-class Tank(pygame.sprite.Sprite):
+class TankPrototype (pygame.sprite.Sprite):
     def __init__(self, game, name, team_color, x, y, direction, *group):
-        super(Tank, self).__init__(*group)
+        super().__init__(*group)
 
         self.__hp = MAX_HP
         self.__mp = MAX_MP
