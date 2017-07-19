@@ -16,9 +16,17 @@ class Game:
         self.sprite_list = pygame.sprite.Group()
         self.tank_list = pygame.sprite.Group()
         self.bullet_list = pygame.sprite.Group()
-        
+      
         tank1 = BotSample(self, 1, "green", 0, 0, "right", self.sprite_list, self.tank_list)
 
+    def add_hidden_update(self, func):
+        try :
+            a = type(self.__hidden_update_list)
+        except :
+            self.__hidden_update_list = []
+
+        self.__hidden_update_list.append(func)
+        
     def processEvents(self):
             self.mouseX, self.mouseY = pygame.mouse.get_pos()
             for event in pygame.event.get():
@@ -29,6 +37,7 @@ class Game:
     def main(self):
         while True:
             self.screen.blit(self.background, [0, 0])
+            [ func() for func in self.__hidden_update_list ]
             self.sprite_list.update()
             self.sprite_list.draw(self.screen)
             pygame.display.update()

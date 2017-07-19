@@ -26,7 +26,8 @@ class TankPrototype (pygame.sprite.Sprite):
 
         self.__shoot_cooldown = SHOOT_COOLDOWN
         self.__move_cooldown = MOVE_COOLDOWN
-        
+
+        game.add_hidden_update(self.__hidden_update)
         self.__game = game
 
     #private methods ( internal use only, other cant use it, it's danger to allow so )
@@ -65,6 +66,16 @@ class TankPrototype (pygame.sprite.Sprite):
         if self.__direction == "right": return 1
         if self.__direction == "up": return 2
         if self.__direction == "down": return 3
+
+    def __hidden_update(self):
+        self.__move_cooldown -= 1 / FPS
+        self.__shoot_cooldown -= 1 / FPS
+        self.__mp += MP_REGEN_RATE / FPS
+    
+        self.rect.x = self.__grid_x * BLOCK_SIZE
+        self.rect.y = self.__grid_y * BLOCK_SIZE
+
+        self.__checkBulletCollision()
 
     #public methods
     def getHP(self):
@@ -129,14 +140,8 @@ class TankPrototype (pygame.sprite.Sprite):
         return self.rect.x // BLOCK_SIZE, self.rect.y // BLOCK_SIZE
 
     #this is pseudo abstract method ( should be override )
-    def update(self):        
-        self.__move_cooldown -= 1 / FPS
-        self.__shoot_cooldown -= 1 / FPS
-        self.__mp += MP_REGEN_RATE / FPS
-    
-        self.rect.x = self.__grid_x * BLOCK_SIZE
-        self.rect.y = self.__grid_y * BLOCK_SIZE
-
-        self.__checkBulletCollision()
+    #the update process that should not be invoked from outside is in hidden_update() method
+    def update(self):
+        pass
 
   
