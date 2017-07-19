@@ -1,7 +1,6 @@
-import pygame
-import time
+import pygame, sys, time
 
-from core.tank import TankPrototype
+from bots.bot_sample import BotSample
 from core.constants import *
 
 class Game:
@@ -18,9 +17,7 @@ class Game:
         self.tank_list = pygame.sprite.Group()
         self.bullet_list = pygame.sprite.Group()
         
-        tank1 = TankPrototype(self, 1, "green", 0, 0, "right", self.sprite_list, self.tank_list)
-
-        self.__time_last_frame = -1
+        tank1 = BotSample(self, 1, "green", 0, 0, "right", self.sprite_list, self.tank_list)
 
     def processEvents(self):
             self.mouseX, self.mouseY = pygame.mouse.get_pos()
@@ -37,8 +34,6 @@ class Game:
             pygame.display.update()
             
             self.processEvents()
-
-            self.__time_last_frame = time.time()
             self.clock.tick(FPS)
 
 Game().main()

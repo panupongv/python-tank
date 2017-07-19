@@ -77,7 +77,6 @@ class Bullet_Heal(Bullet):
         speed = 60
         super().__init__( tank, direction, "source/heart.png", damage, speed, *group) #add
 
-
 class Bullet_Damage(Bullet):
     def __init__( self, tank, direction, *group) :
         damage = 10
