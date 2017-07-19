@@ -3,14 +3,13 @@ import sys,os
 import pygame
 
 class Bullet (pygame.sprite.Sprite) :
-    def __init__( self, tank, direction, image_path ,bullet_damage,bullet_speed, mana_reduct, *group) : #add to bullet group
+    def __init__( self, tank, direction, image_path ,bullet_damage,bullet_speed, *group) : #add to bullet group
         super(Bullet, self).__init__(*group)
         self.image = pygame.image.load(image_path)
         self.rect = self.image.get_rect()
         
         #static contant initialize
         self.__bullet_damage = bullet_damage
-        self.__mana_reduction = mana_reduct
         self.__setSpeed( direction, bullet_speed )
         self.radius = 5
         
@@ -75,19 +74,16 @@ class Bullet (pygame.sprite.Sprite) :
     def getDamage( self ) :
         return self.__bullet_damage
 
-    def getManaReduction( self ):
-        return self.__mana_reduction
-
 
 class Bullet_Heal(Bullet):
     def __init__( self, tank, direction, *group) :
         heal_path = ""
-        super().__init__( tank, direction, "bullet.png" ,-5, 60, 20, *group) #add
+        super().__init__( tank, direction, "bullet.png" ,-5, 60, *group) #add
 
 
 class Bullet_Damage(Bullet):
     def __init__( self, tank, direction, *group) :
         damage_path = ""
-        super().__init__( tank, direction, "bullet.png" , 10, 180, 10, *group) #add
+        super().__init__( tank, direction, "bullet.png" , 10, 180, *group) #add
 
         
