@@ -13,8 +13,12 @@ class Game:
         self.background = pygame.image.load("bg.png")
         self.clock = pygame.time.Clock()
         self.screen = pygame.display.set_mode([650, 650])
+        
+        self.sprite_list = pygame.sprite.Group()
         self.tank_list = pygame.sprite.Group()
-        tank1 = Tank("red", 1, "red", 0, 0, "right", self.tank_list)
+        self.bullet_list = pygame.sprite.Group()
+        
+        tank1 = Tank(self, 1, "green", 0, 0, "right", self.sprite_list, self.tank_list)
 
         self.__time_last_frame = -1
 
@@ -26,20 +30,18 @@ class Game:
                     sys.exit()
 
     def getDeltaTime(self) :
-        return time() - self.__time_last_frame
+        return time.time() - self.__time_last_frame
                 
     def main(self):
         while True:
             self.screen.blit(self.background, [0, 0])
-            #self.tank_list.update(self)
-            for i in self.tank_list:
-                i.update(self)
-                print(i.getPosition())
-            self.tank_list.draw(self.screen)
+            self.sprite_list.update(self)
+            self.sprite_list.draw(self.screen)
             pygame.display.update()
+            
             self.processEvents()
-            self.clock.tick(1)
 
-            self.__time_last_frame = time()
+            self.__time_last_frame = time.time()
+            self.clock.tick(FPS)
 
 Game().main()
