@@ -15,6 +15,7 @@ class TankPrototype (pygame.sprite.Sprite):
         self.__name_tag = NameDisplay(name)
         self.__hp = Bar(RED, MAX_HP, MAX_HP, x * BLOCK_SIZE, y * BLOCK_SIZE) 
         self.__mp = Bar(BLUE, MAX_MP, MAX_MP, x * BLOCK_SIZE, y * BLOCK_SIZE + BAR_HEIGHT)
+        self.__dead = False
         
         self.__team_color = team_color
         self.__name = name
@@ -51,6 +52,7 @@ class TankPrototype (pygame.sprite.Sprite):
                 self.__hp -= bullet.getDamage()
                 bullet.kill()
                 if self.__hp <= 0:
+                    self.__dead = True
                     self.rect.x = self.rect.y = -100
                     self.kill()
                 elif self.__hp > MAX_HP:
@@ -94,6 +96,9 @@ class TankPrototype (pygame.sprite.Sprite):
         self.__checkBulletCollision()
 
     #public methods
+    def isDead(self):
+        return self.__dead
+        
     def getHP(self):
         return self.__hp.getValue()
 
@@ -107,7 +112,7 @@ class TankPrototype (pygame.sprite.Sprite):
         return self.__team_color == tank.getTeamColor()
 
     def readyToMove(self):
-        return self.__move_cooldown <= 0 and not self.isMoving()
+        return self.__move_cooldown <= 0 and not self.isMoving() and self.getMP() >= DAMAGE_BULLET_MANA_COST
 
     def readyToShoot(self):
         return self.__shoot_cooldown <= 0
@@ -271,4 +276,7 @@ class TankInfo :
     
     def getDirection(self) :
         return self.__tank.getDirection()
+    
+    def isDead(self) :
+        return self.__tank.isDead()
 
