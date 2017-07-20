@@ -4,6 +4,7 @@ from core.constants import *
 from core.bullet import Bullet_Heal, Bullet_Damage
 from core.bar import Bar
 from time import time as current_time
+from math import pi, sin
 
 class TankPrototype (pygame.sprite.Sprite):
     #constructor
@@ -123,9 +124,10 @@ class TankPrototype (pygame.sprite.Sprite):
         to_y = self.__to_grid_y*BLOCK_SIZE
         time_since_start_move = current_time() - self.__start_move_time
         ratio = self.__clampOne(time_since_start_move/MOVE_TIME)
+        angle = ratio*pi/2
         
-        self.rect.x  = from_x + ratio*(to_x - from_x)
-        self.rect.y = from_y + ratio*(to_y - from_y)
+        self.rect.x  = from_x + sin(angle)*(to_x - from_x)
+        self.rect.y = from_y + sin(angle)*(to_y - from_y)
         
         if ratio >= 1 :
             self.__is_moving = False
