@@ -162,7 +162,10 @@ class TankPrototype (pygame.sprite.Sprite):
             raise ValueError('unknown direction given : ' + str(direction))
         
         self.__to_grid_x = self.__grid_x
-        self.__to_grid_y = self.__grid_y   
+        self.__to_grid_y = self.__grid_y
+
+        # decrease mp when move
+        self.__mp -= MOVE_MANA_COST
         
         self.__resetMoveCooldown()
 
