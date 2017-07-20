@@ -28,7 +28,6 @@ class BotEit ( TankPrototype ):
     def start( self ) :
         #this method will be call at the beginning once
         #use this to initialize variable you will use in your tank algorithm
-        self.current_direction = 'left'
         self.x, self.y = self.getPosition()
         self.cloest_enemy = None
         
@@ -70,9 +69,6 @@ class BotEit ( TankPrototype ):
         #code your algorithm here and it will effect your tank action
 
         self.x, self.y = self.getPosition()
-                
-        '''then move it to the determined direction'''
-        self.move(self.current_direction)
         
         '''the info list obtained is mixed with ally and enemy ( including yourself )'''
         '''it is not a bad idea to classify it first'''
