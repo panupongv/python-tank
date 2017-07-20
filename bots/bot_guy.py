@@ -1,4 +1,5 @@
 import pygame
+import random
 
 from core.tank import TankPrototype
 
@@ -33,12 +34,29 @@ class BotGuy ( TankPrototype ):
     
     def update( self ) :
         #Op method dat will reck ya enemy
-        print("update guy")
 
-        for tank in self.getTankInfoList():
-            direction = self.SuggestionFire(self,tank)
-            if(direction == 'none'):
-                continue
+        if(self.readyToShoot()):
+            for tank in self.getTankInfoList():
+                direction = self.SuggestionFire(self,tank)
+                if(direction == 'none'):
+                    continue
+                else:
+                    if(self.isAlly(tank)):
+                        self.shoot_heal(direction)
+                    '''
+                    else:
+                        self.shoot(direction)
+                    '''
+        elif(self.readyToMove()):
+            movementSet = ('left' ,'right' ,'up' ,'down')
+            while(True):
+                direc = movementSet[ random.randint(0,3) ]
+                if(not self.isAtEdge(direc)):
+                    self.move(direc)
+                    break
+
+
+
                         
     # return direction if in range , return None if not in range              
     def SuggestionFire(self,tank_me, tank_other):
