@@ -227,8 +227,6 @@ class TankPrototype (pygame.sprite.Sprite):
         return self.__direction
     
     def canMove(self, direction) :
-        return self.isAtEdge(direction)
-    
         if self.isAtEdge(direction) :
             return False
         
@@ -246,10 +244,9 @@ class TankPrototype (pygame.sprite.Sprite):
         
         for t in self.getTankInfoList() :
             tx, ty = t.getPosition()
-            if t.isMySelf(self) :
-                continue
-            if mx == tx and my == ty :
-                return False
+            if not t.isMySelf(self) :
+                if mx == tx and my == ty :
+                    return False
             
         return True
         
