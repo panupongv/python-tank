@@ -250,6 +250,26 @@ class TankPrototype (pygame.sprite.Sprite):
             
         return True
         
+    def getAllyList( self ):
+        ally_list = list()
+
+        for tank in self.getTankInfoList():
+            if(self.getName() == tank.getName()):
+                continue
+            elif(self.isAlly(tank)):
+                ally_list.append(tank)
+        return ally_list
+    
+    def getEnemyList( self ):
+        enemy_list = list()
+
+        for tank in self.getTankInfoList():
+            if (self.getName() == tank.getName()):
+                continue
+            elif (not self.isAlly(tank)):
+                enemy_list.append(tank)
+        return enemy_list
+    
     #for calling bars.draw() from main
     def drawBars(self, screen):
         self.__hp.draw(screen)

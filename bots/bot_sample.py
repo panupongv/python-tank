@@ -28,31 +28,6 @@ class BotSample ( TankPrototype ):
         #this method will be call at the __init__() function of a super class
         #use this to create and initialize variable you will use in your tank algorithm
         self.current_direction = 'left'
-
-    # Return list of Allie tank
-    def getAllyList( self ):
-        Allielist = list()
-
-        for tank in self.getTankInfoList():
-            if(self.getName() == tank.getName()):
-                continue
-            elif(self.isAlly(tank)):
-                Allielist.append(tank)
-        return Allielist
-
-    # Return list  of Enemy tank
-    def getEnemyList( self ):
-        Enemylist = list()
-
-        for tank in self.getTankInfoList():
-            if (self.getName() == tank.getName()):
-                continue
-            elif (not self.isAlly(tank)):
-                Enemylist.append(tank)
-        return Enemylist
-
-
-
     
     def update( self ) :
         #this method will be called every millisecond
