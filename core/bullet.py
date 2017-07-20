@@ -1,5 +1,4 @@
-import constants as setting
-import sys,os
+from core.constants import *
 import pygame
 
 class Bullet (pygame.sprite.Sprite) :
@@ -19,8 +18,8 @@ class Bullet (pygame.sprite.Sprite) :
         self.__setStartPosition( x, y )
 
     def __setStartPosition( self, x, y ) :
-        self.rect.x = x*setting.BLOCK_SIZE + setting.BLOCK_SIZE / 2 - self.rect.width / 2
-        self.rect.y = y*setting.BLOCK_SIZE + setting.BLOCK_SIZE / 2 - self.rect.height / 2
+        self.rect.x = x*BLOCK_SIZE + BLOCK_SIZE / 2 - self.rect.width / 2
+        self.rect.y = y*BLOCK_SIZE + BLOCK_SIZE / 2 - self.rect.height / 2
         
     def __createBulletRect( self , image_path ) :
         path = os.path.join(image_path)
@@ -59,14 +58,14 @@ class Bullet (pygame.sprite.Sprite) :
         return pygame.sprite.collide_rect(self, tank)
 
     def update(self) :
-        self.rect.x += self.__speed_x/setting.FPS#*game.getDeltaTime()
-        self.rect.y += self.__speed_y/setting.FPS#*game.getDeltaTime()
+        self.rect.x += self.__speed_x/FPS
+        self.rect.y += self.__speed_y/FPS
         if self.__isOutOfMap() :
             self.kill()
 
     def __isOutOfMap( self ) :
-        return self.rect.x > setting.SCREEN_WIDTH or self.rect.x < -10 or \
-               self.rect.y > setting.SCREEN_HEIGHT or self.rect.y < -10
+        return self.rect.x > SCREEN_WIDTH or self.rect.x < -10 or \
+               self.rect.y > SCREEN_HEIGHT or self.rect.y < -10
 
     def getDamage( self ) :
         return self.__bullet_damage
@@ -74,13 +73,14 @@ class Bullet (pygame.sprite.Sprite) :
 
 class Bullet_Heal(Bullet):
     def __init__( self, tank, direction, *group) :
-        heal_path = ""
-        super().__init__( tank, direction, "heart.png" ,-5, 60, *group) #add
-
+        damage = -5
+        speed = 60
+        super().__init__( tank, direction, "source/heart.png", damage, speed, *group) #add
 
 class Bullet_Damage(Bullet):
     def __init__( self, tank, direction, *group) :
-        damage_path = ""
-        super().__init__( tank, direction, "bullet.png" , 10, 180, *group) #add
+        damage = 10
+        speed = 180
+        super().__init__( tank, direction, "source/bullet.png", damage, speed, *group) #add
 
         
