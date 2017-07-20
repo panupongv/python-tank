@@ -74,9 +74,6 @@ class BotEit ( TankPrototype ):
         '''then move it to the determined direction'''
         self.move(self.current_direction)
         
-        '''we can get the information of all the tanks in the field from getTankInfoList() method'''
-        tank_list = self.getTankInfoList()
-        
         '''the info list obtained is mixed with ally and enemy ( including yourself )'''
         '''it is not a bad idea to classify it first'''
         ally_list = self.getAllyList()
