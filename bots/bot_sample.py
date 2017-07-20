@@ -29,10 +29,20 @@ class BotSample ( TankPrototype ):
                 
         self.move(self.current_direction)
         
-        info_list = self.getTankInfoList()
-        for info in info_list :
-            if not self.isAlly(info) :
-                if info.getPosition()[0] == self.getPosition()[0] :
+        tank_list = self.getTankInfoList()
+        ally_list = []
+        enemy_list = []
+        
+        for tank in tank_list :
+            if tank.isAlly(self) and not tank.isMySelf(self) :
+                ally_list.append(tank)
+            elif tank.isAlly(self) == False :
+                enemy_list.append(tank)
+                
+        for enemy in enemy_list :
+            if enemy.getPosition()[0] == self.getPosition()[0]:
+                if enemy.getPosition()[1] < self.getPosition()[0] :
+                    self.shoot('up')
+                else :
                     self.shoot('down')
-
   
