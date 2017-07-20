@@ -40,6 +40,8 @@ class Game:
             [ func() for func in self.__hidden_update_list ]
             self.sprite_list.update()
             self.sprite_list.draw(self.screen)
+            for tank in self.tank_list:
+                tank.drawBars(self.screen)
             pygame.display.update()
             
             self.processEvents()

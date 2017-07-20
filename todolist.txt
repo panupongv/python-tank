@@ -2,9 +2,9 @@
 modulize
 hidden update
 4head tank
+hp mp bar
 
 [todo]
-hp mp bar
 position detection methods with encapsulation
 new main
 2 mode main ( for battle and for training )

@@ -2,14 +2,15 @@ import pygame
 
 from core.constants import *
 from core.bullet import Bullet_Heal, Bullet_Damage
+from core.bar import Bar
 
 class TankPrototype (pygame.sprite.Sprite):
     #constructor
     def __init__(self, game, name, team_color, x, y, direction, *group):
         super().__init__(*group)
 
-        self.__hp = MAX_HP
-        self.__mp = MAX_MP
+        self.__hp = Bar(RED, MAX_HP, MAX_HP, x * BLOCK_SIZE, y * BLOCK_SIZE) 
+        self.__mp = Bar(BLUE, MAX_MP, MAX_MP, x * BLOCK_SIZE, y * BLOCK_SIZE + BAR_HEIGHT)
         
         self.__team_color = team_color
         self.__name = name
@@ -75,14 +76,17 @@ class TankPrototype (pygame.sprite.Sprite):
         self.rect.x = self.__grid_x * BLOCK_SIZE
         self.rect.y = self.__grid_y * BLOCK_SIZE
 
+        self.__hp.updatePosition(self.rect.x, self.rect.y)
+        self.__mp.updatePosition(self.rect.x, self.rect.y + BAR_HEIGHT)
+
         self.__checkBulletCollision()
 
     #public methods
     def getHP(self):
-        return self.__hp
+        return int(self.__hp)
 
     def getMP(self):
-        return self.__mp
+        return int(self.__mp)
 
     def isAlly(self, tank):
         return self.__team_color == tank.getTeamColor()
@@ -139,6 +143,11 @@ class TankPrototype (pygame.sprite.Sprite):
     def getPosition(self):
         return self.rect.x // BLOCK_SIZE, self.rect.y // BLOCK_SIZE
 
+    #for calling bars.draw() from main
+    def drawBars(self, screen):
+        self.__hp.draw(screen)
+        self.__mp.draw(screen)
+        
     #this is pseudo abstract method ( should be override )
     #the update process that should not be invoked from outside is in hidden_update() method
     def update(self):
