@@ -33,22 +33,21 @@ class BotGuy ( TankPrototype ):
     
     def update( self ) :
         #Op method dat will reck ya enemy
-<<<<<<< HEAD
         print("update guy")
                         
     # return direction if in range , return None if not in range              
     def SuggestionFire(tank_me, tank_other):
-        x_other , y_other = tank.getPosition()
-        x_me , y_me = self.getPosition()
+        x_other , y_other = tank_other.getPosition()
+        x_me , y_me = tank_me.getPosition()
         
-        if(abs(x_me - x_friend <= 2)):
+        if(abs(x_me - x_other) <= 2):
             if(y_me > y_other):
                 return 'up'
         
             elif(y_me < y_other):
                 return 'down'
 
-        elif(abs(y_me - y_friend <= 2)):
+        elif(abs(y_me - y_other) <= 2):
             if(x_me > x_other):
                 return 'left'
         
@@ -62,7 +61,3 @@ class BotGuy ( TankPrototype ):
 
 
             
-=======
-        for i in self.getTankInfoList():
-            pass
->>>>>>> 00a0436f761ac7740d23f4977b0df8fa801343e8
