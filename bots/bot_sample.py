@@ -30,7 +30,7 @@ class BotSample ( TankPrototype ):
         self.current_direction = 'left'
 
     # Return list of Allie tank
-    def getAllieList( self ):
+    def getAllyList( self ):
         Allielist = list()
 
         for tank in self.getTankInfoList():
