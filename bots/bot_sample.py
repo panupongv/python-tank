@@ -11,9 +11,10 @@ class BotSample ( TankPrototype ):
     getMP()                get current MP
     getName()              get name
     getPosition()          get x, y position
-    isMoving()             check if moving( can't change direction while moving )
     getAllyList()          get a list of friendly tanks
     getEnemyList()         get a list of enemy tanks
+    isMoving()             check if moving( can't change direction while moving )
+    isDead()               check if the tank is dead or not
     isAtEdge(direction)    check if at edge of bettle field
     isBlocked(direction)   check if stuck with other tanks
     getDirection()         get heading direction ( also moving direction if is moving )
@@ -25,7 +26,6 @@ class BotSample ( TankPrototype ):
     move(direction)        move forward in the specified direction ('left' 'right' 'up' 'down')
     shoot(direction)       fire a bullet in the specified direction ('left' 'right' 'up' 'down') : cost 10 mana
     shoot_heal(direction)  fire a potion in the specified direction ('left' 'right' 'up' 'down') : cost 20 mana
-
     '''
     
     def start( self ) :
