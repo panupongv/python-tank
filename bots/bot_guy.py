@@ -34,28 +34,55 @@ class BotGuy ( TankPrototype ):
     
     def update( self ) :
         #Op method dat will reck ya enemy
+        command = random.randint(0,1)
 
-        if(self.readyToShoot()):
+        if(command):
+            self.updateShoot()
+        else:
+            self.updateMove()
+
+
+    def updateShoot(self):
+        if (self.readyToShoot()):
             for tank in self.getTankInfoList():
-                direction = self.SuggestionFire(self,tank)
-                if(direction == 'none'):
+                direction = self.SuggestionFire(self, tank)
+                if (direction == 'none'):
                     continue
                 else:
-                    if(self.isAlly(tank)):
+                    if (self.isAlly(tank)):
                         self.shoot_heal(direction)
                     '''
                     else:
                         self.shoot(direction)
                     '''
-        elif(self.readyToMove()):
-            movementSet = ('left' ,'right' ,'up' ,'down')
-            while(True):
-                direc = movementSet[ random.randint(0,3) ]
-                if(not self.isAtEdge(direc)):
+        elif (self.readyToMove()):
+            movementSet = ('left', 'right', 'up', 'down')
+            while (True):
+                direc = movementSet[random.randint(0, 3)]
+                if (not self.isAtEdge(direc)):
                     self.move(direc)
                     break
 
-
+    def updateMove(self):
+        if (self.readyToMove()):
+            movementSet = ('left', 'right', 'up', 'down')
+            while (True):
+                direc = movementSet[random.randint(0, 3)]
+                if (not self.isAtEdge(direc)):
+                    self.move(direc)
+                    break
+        elif (self.readyToShoot()):
+            for tank in self.getTankInfoList():
+                direction = self.SuggestionFire(self, tank)
+                if (direction == 'none'):
+                    continue
+                else:
+                    if (self.isAlly(tank)):
+                        self.shoot_heal(direction)
+                    '''
+                    else:
+                        self.shoot(direction)
+                    '''
 
                         
     # return direction if in range , return None if not in range              
