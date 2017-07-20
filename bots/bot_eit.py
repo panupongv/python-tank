@@ -57,7 +57,7 @@ class BotEit ( TankPrototype ):
         
     def set_closet_enemy( self, enemy_list ):
         for enemy in enemy_list:
-            if self.cloest_enemy == None:
+            if self.cloest_enemy == None or not self.cloest_enemy in enemy_list:
                 self.cloest_enemy = enemy
                 continue
             self.cloest_enemy = self.which_is_closer(enemy,self.cloest_enemy)
@@ -78,6 +78,8 @@ class BotEit ( TankPrototype ):
         self.set_closet_enemy(enemy_list)
         self.move_to_tank(self.cloest_enemy)
         cloest_x,cloest_y = self.cloest_enemy.getPosition()
+#        print(self.cloest_enemy.getName())
+        #print(len(enemy_list))
         if self.x == cloest_x :      
             if self.y > cloest_y :   #enemy is located above
                 self.shoot('up')
