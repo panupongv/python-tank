@@ -1,6 +1,10 @@
 import pygame, sys, time
 
-from bots.bot_sample import BotSample
+from bots.bot_tawan import BotTawan
+from bots.bot_guy import BotGuy
+from bots.bot_most import FuckBot420
+from bots.bot_eit import BotEit
+
 from core.constants import *
 from core.tank import TankInfo
 
@@ -18,8 +22,10 @@ class Game:
         self.tank_list = pygame.sprite.Group()
         self.bullet_list = pygame.sprite.Group()
         
-        tank1 = BotSample(self, 1, "green", 0, 0, "right", self.sprite_list, self.tank_list)
-        tank2 = BotSample(self, 2, "red", 4, 9, "down", self.sprite_list, self.tank_list)
+        tank_tawan = BotTawan(self, 0, 'green', 0, 0, 'right', self.sprite_list, self.tank_list)
+        tank_most = FuckBot420(self, 1, "red", 9, 0, "up", self.sprite_list, self.tank_list)
+        tank_guy = BotGuy(self, 2, "red", 0, 9, "down", self.sprite_list, self.tank_list)
+        tank_eit = BotEit(self, 3, "green", 9, 9, "left", self.sprite_list, self.tank_list)
     
         self.__tank_info_list = [ TankInfo(tank) for tank in self.tank_list ]
 

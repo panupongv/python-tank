@@ -33,6 +33,7 @@ class BotGuy ( TankPrototype ):
     
     def update( self ) :
         #Op method dat will reck ya enemy
+<<<<<<< HEAD
         print("update guy")
                         
     # return direction if in range , return None if not in range              
@@ -61,3 +62,7 @@ class BotGuy ( TankPrototype ):
 
 
             
+=======
+        for i in self.getTankInfoList():
+            pass
+>>>>>>> 00a0436f761ac7740d23f4977b0df8fa801343e8
