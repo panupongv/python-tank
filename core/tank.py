@@ -162,10 +162,7 @@ class TankPrototype (pygame.sprite.Sprite):
             raise ValueError('unknown direction given : ' + str(direction))
         
         self.__to_grid_x = self.__grid_x
-        self.__to_grid_y = self.__grid_y
-
-        # decrease mp when move
-        self.__mp -= MOVE_MANA_COST
+        self.__to_grid_y = self.__grid_y   
         
         self.__resetMoveCooldown()
 
@@ -175,7 +172,7 @@ class TankPrototype (pygame.sprite.Sprite):
             self.__resetShootCooldown()
             self.__mp -= DAMAGE_BULLET_MANA_COST
 
-    def shoot_heal(self, direction):
+    def heal(self, direction):
         if self.readyToShoot() and self.__mp.getValue() - HEAL_BULLET_MANA_COST >= 0:
             bullet = Bullet_Heal(self, direction, self.__game.sprite_list, self.__game.bullet_list)
             self.__resetShootCooldown()
