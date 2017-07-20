@@ -20,7 +20,12 @@ class BotSample ( TankPrototype ):
     def update( self ) :
         #code your algorithm here
         super().update()
-        self.shoot('down')
         self.move('right')
+        
+        info_list = self.getTankInfoList()
+        for info in info_list :
+            if not self.isAlly(info) :
+                if info.getPosition()[0] == self.getPosition()[0] :
+                    self.shoot('down')
 
   

@@ -45,9 +45,9 @@ class Bar:
     def __ge__(self, val):
         return self.__val >= val
 
-    def __int__(self):
+    def getValue(self):
         return self.__val
-
+    
     def draw(self, screen):
         pygame.draw.rect(screen, setting.BLACK, (self.__x, self.__y, setting.BLOCK_SIZE, setting.BAR_HEIGHT))
         if self.__val > 0:

@@ -78,7 +78,7 @@ class TankPrototype (pygame.sprite.Sprite):
         if self.__direction == "right": return 1
         if self.__direction == "up": return 2
         if self.__direction == "down": return 3
-
+    
     def __hidden_update(self):
         self.__move_cooldown -= 1 / FPS
         self.__shoot_cooldown -= 1 / FPS
@@ -100,16 +100,16 @@ class TankPrototype (pygame.sprite.Sprite):
 
     #public methods
     def getHP(self):
-        return int(self.__hp)
+        return self.__hp.getValue()
 
     def getMP(self):
-        return int(self.__mp)
-
-    def isAlly(self, tank):
-        return self.__team_color == tank.getTeamColor()
+        return self.__mp.getValue()
 
     def getTeamColor(self):
         return self.__team_color
+    
+    def isAlly(self, tank):
+        return self.__team_color == tank.getTeamColor()
 
     def readyToMove(self):
         return self.__move_cooldown <= 0 and self.__move_counter == 0
@@ -153,13 +153,13 @@ class TankPrototype (pygame.sprite.Sprite):
         self.__resetMoveCooldown()
 
     def shoot(self, direction):
-        if self.readyToShoot() and self.__mp - DAMAGE_BULLET_MANA_COST >= 0:
+        if self.readyToShoot() and self.__mp.getValue() - DAMAGE_BULLET_MANA_COST >= 0:
             bullet = Bullet_Damage(self, direction, self.__game.sprite_list, self.__game.bullet_list)
             self.__resetShootCooldown()
             self.__mp -= DAMAGE_BULLET_MANA_COST
 
     def heal(self, direction):
-        if self.readyToShoot() and self.__mp - HEAL_BULLET_MANA_COST >= 0:
+        if self.readyToShoot() and self.__mp.getValue() - HEAL_BULLET_MANA_COST >= 0:
             bullet = Bullet_Heal(self, direction, self.__game.sprite_list, self.__game.bullet_list)
             self.__resetShootCooldown()
             self.__mp -= HEAL_BULLET_MANA_COST
@@ -173,6 +173,9 @@ class TankPrototype (pygame.sprite.Sprite):
     def isMoving(self):
         return self.__is_moving
     
+    def getTankInfoList(self):
+        return self.__game.getTankInfoList()
+    
     #for calling bars.draw() from main
     def drawBars(self, screen):
         self.__hp.draw(screen)
@@ -181,5 +184,36 @@ class TankPrototype (pygame.sprite.Sprite):
     #this is pseudo abstract method ( should be override )
     #the update process that should not be invoked from outside is in hidden_update() method
     def update(self):
-        pass 
+        pass
+    
+class TankInfo :
+    def __init__(self, tank):
+        self.__tank = tank
+        
+    def getHP(self):
+        return self.__tank.getHP()
+    
+    def getMP(self):
+        return self.__tank.getMP()
+    
+    def readyToMove(self):
+        return self.__tank.readyToMove()
+    
+    def readyToShoot(self):
+        return self.__tank.readyToShoot()
+    
+    def getName(self):
+        return self.__tank.getName()
+    
+    def getPosition(self):
+        return self.__tank.getPosition()
+    
+    def getTeamColor(self) :
+        return self.__tank.getTeamColor()
+    
+    def isAlly(self, tank):
+        return self.getTeamColor() == tank.getTeamColor()
+    
+    def isMySelf(self, my_tank) :
+        return my_tank == self.__tank
 
