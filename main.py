@@ -19,7 +19,7 @@ class Game:
         self.bullet_list = pygame.sprite.Group()
         
         tank1 = BotSample(self, 1, "green", 0, 0, "right", self.sprite_list, self.tank_list)
-        tank2 = BotSample(self, 2, "red", 2, 2, "down", self.sprite_list, self.tank_list)
+        tank2 = BotSample(self, 2, "red", 4, 9, "down", self.sprite_list, self.tank_list)
     
         self.__tank_info_list = [ TankInfo(tank) for tank in self.tank_list ]
 
