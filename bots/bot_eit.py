@@ -38,10 +38,11 @@ class BotEit ( TankPrototype ):
             self.move("right")
         elif self.x > enemy_x:
             self.move("left")
-        if self.y < enemy_x:
-            self.move("down")
-        elif self.y > enemy_y:
-            self.move("up")
+        elif self.x == enemy_x:
+            if self.y < enemy_y:
+                self.move("down")
+            elif self.y > enemy_y:
+                self.move("up")
 
     def which_is_closer( self, tank1, tank2):
         tank1_x, tank1_y = tank1.getPosition()
@@ -68,13 +69,7 @@ class BotEit ( TankPrototype ):
         #this method will be called every millisecond
         #code your algorithm here and it will effect your tank action
 
-        self.x, self.y = self.getPosition()        
-##        '''change direction when this tank is at the edge of the battle field'''
-##        if self.isAtEdge(self.current_direction) :
-##            if self.current_direction == 'left' :
-##                self.current_direction = 'right'
-##            elif self.current_direction == 'right' :
-##                self.current_direction = 'left'
+        self.x, self.y = self.getPosition()
                 
         '''then move it to the determined direction'''
         self.move(self.current_direction)
@@ -92,11 +87,6 @@ class BotEit ( TankPrototype ):
             elif tank.isAlly(self) == False :
                 enemy_list.append(tank)
                 
-        '''then we check where the enemies are and shoot them'''
-##        for enemy in enemy_list :
-##            self_x, self_y = self.getPosition()
-##            enemy_x, enemy_y = enemy.getPosition()
-##
         self.set_closet_enemy(enemy_list)
         self.move_to_tank(self.cloest_enemy)
         cloest_x,cloest_y = self.cloest_enemy.getPosition()
