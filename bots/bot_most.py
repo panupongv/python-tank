@@ -71,23 +71,9 @@ class FuckBot420 ( TankPrototype ):
                 else:
                     self.current_direction = 'left'
                 
-        '''then move it to the determined direction'''
         self.move(self.current_direction)
         
-        '''we can get the information of all the tanks in the field from getTankInfoList() method'''
-        tank_list = self.getTankInfoList()
-        
-        '''the info list obtained is mixed with ally and enemy ( including yourself )'''
-        '''it is not a bad idea to classify it first'''
-        ally_list = []
-        enemy_list = []
-        for tank in tank_list :
-            if tank.isAlly(self) and not tank.isMySelf(self) :
-                ally_list.append(tank)
-            elif tank.isAlly(self) == False :
-                enemy_list.append(tank)
-                
-        '''then we check where the enemies are and shoot them'''
+        enemy_list = self.getEnemyList()
         if self.getMP() > 50:
             for enemy in enemy_list :
                 enemy_x, enemy_y = enemy.getPosition()

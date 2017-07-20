@@ -48,7 +48,7 @@ class BotGuy ( TankPrototype ):
 
     def updateShoot(self):
         if (self.readyToShoot()):
-            for tank in self.getTankInfoList():
+            for tank in self.getEnemyList():
                 direction = self.SuggestionFire(self, tank)
                 if (direction == 'none'):
                     continue
@@ -76,7 +76,7 @@ class BotGuy ( TankPrototype ):
                     self.move(direc)
                     break
         elif (self.readyToShoot()):
-            for tank in self.getTankInfoList():
+            for tank in self.getEnemyList():
                 direction = self.SuggestionFire(self, tank)
                 if (direction == 'none'):
                     continue
