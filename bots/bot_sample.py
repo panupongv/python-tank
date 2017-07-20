@@ -25,13 +25,13 @@ class BotSample ( TankPrototype ):
     '''
     
     def start( self ) :
-        #this method will be call at the beginning once
-        #use this to initialize variable you will use in your tank algorithm
+        #this method will be call at the __init__() function of a super class
+        #use this to create and initialize variable you will use in your tank algorithm
         self.current_direction = 'left'
     
     def update( self ) :
         #this method will be called every millisecond
-        #code your algorithm here and it will effect your tank action
+        #code your algorithm here and it will affect your tank action
         
         '''change direction when this tank is at the edge of the battle field'''
         if self.isAtEdge(self.current_direction) :
