@@ -7,7 +7,7 @@ from bots.bot_eit import BotEit
 
 from core.constants import *
 from core.tank import TankInfo
-from core.namedisplay import NameDisplay
+from core.namedisplay import TimeDisplay
 
 class Game:
     def __init__(self):
@@ -26,7 +26,7 @@ class Game:
         self.bullet_list = pygame.sprite.Group()
 
         self.timeleft = MATCH_TIME
-        self.__timeleftdisplay = NameDisplay("...",300)
+        self.__timeleftdisplay = TimeDisplay("...",TIME_LABLE_SIZE)
 
         tank_tawan = BotTawan(self, 'tawan', 'green', 0, 0, 'right', self.sprite_list, self.tank_list)
         tank_most = FuckBot420(self, 'fuck bot 420', "red", 9, 0, "up", self.sprite_list, self.tank_list)

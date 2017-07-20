@@ -15,3 +15,9 @@ class NameDisplay:
 
     def updateText(self, new_content):
         self.text = self.font.render(new_content, True, WHITE)
+
+class TimeDisplay(NameDisplay):
+    def draw(self, screen, x, y):
+        x -= self.text.get_width() / 2
+        y -= self.text.get_height() / 2
+        screen.blit(self.text, [x, y])
