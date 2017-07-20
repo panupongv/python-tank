@@ -2,6 +2,7 @@ import pygame
 import random
 
 from core.tank import TankPrototype
+from core.constants import *
 
 class BotGuy ( TankPrototype ):
     #because this bot class is inherited from TankPrototype class
@@ -34,10 +35,13 @@ class BotGuy ( TankPrototype ):
     
     def update( self ) :
         #Op method dat will reck ya enemy
-        command = random.randint(0,1)
+        command = random.randint(0,3)
 
         if(command):
-            self.updateShoot()
+            if(self.getMP() > MAX_MP // 2):
+                self.updateShoot()
+            else:
+                self.updateMove()
         else:
             self.updateMove()
 
@@ -50,7 +54,7 @@ class BotGuy ( TankPrototype ):
                     continue
                 else:
                     if (self.isAlly(tank)):
-                        self.shoot_heal(direction)
+                        self.shoot(direction)
                     '''
                     else:
                         self.shoot(direction)
@@ -78,7 +82,7 @@ class BotGuy ( TankPrototype ):
                     continue
                 else:
                     if (self.isAlly(tank)):
-                        self.shoot_heal(direction)
+                        self.shoot(direction)
                     '''
                     else:
                         self.shoot(direction)

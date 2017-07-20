@@ -74,18 +74,10 @@ class BotEit ( TankPrototype ):
         '''then move it to the determined direction'''
         self.move(self.current_direction)
         
-        '''we can get the information of all the tanks in the field from getTankInfoList() method'''
-        tank_list = self.getTankInfoList()
-        
         '''the info list obtained is mixed with ally and enemy ( including yourself )'''
         '''it is not a bad idea to classify it first'''
-        ally_list = []
-        enemy_list = []
-        for tank in tank_list :
-            if tank.isAlly(self) and not tank.isMySelf(self) :
-                ally_list.append(tank)
-            elif tank.isAlly(self) == False :
-                enemy_list.append(tank)
+        ally_list = self.getAllyList()
+        enemy_list = self.getEnemyList()
                 
         self.set_closet_enemy(enemy_list)
         self.move_to_tank(self.cloest_enemy)
@@ -102,6 +94,4 @@ class BotEit ( TankPrototype ):
                 self.shoot('left')
             else:
                 self.shoot('right')
-        
-            
                 

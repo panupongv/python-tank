@@ -76,7 +76,8 @@ class Game:
         while True:
             ##Drawings
             self.screen.blit(self.background, [0, 0])
-            self.__drawTimeLeft()
+            if winner == "":
+                self.__drawTimeLeft()
             self.sprite_list.draw(self.screen)
             for tank in self.tank_list:
                 tank.drawBars(self.screen)
@@ -96,7 +97,8 @@ class Game:
             self.sprite_list.update()
             self.processEvents()
             self.clock.tick(FPS)
-            self.timeleft -= (1 / FPS)
+            if winner == "":
+                self.timeleft -= (1 / FPS)
 
 
 
