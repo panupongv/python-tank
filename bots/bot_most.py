@@ -87,31 +87,20 @@ class FuckBot420 ( TankPrototype ):
                 enemy_list.append(tank)
                 
         '''then we check where the enemies are and shoot them'''
-        for enemy in enemy_list :
-            enemy_x, enemy_y = enemy.getPosition()
-            
-            if self.current_direction == 'left':
-                if enemy_x == self_x - 1 or enemy_x == self_x - 2:
-                    if enemy_y >= self_y:
-                        self.shoot('down')
-                    else:
-                        self.shoot('up')
-            elif self.current_direction == 'right':
-                if enemy_x == self_x + 1 or enemy_x == self_x + 2:
-                    if enemy_y >= self_y:
-                        self.shoot('down')
-                    else:
-                        self.shoot('up')
-            elif self.current_direction == 'up':
-                if enemy_y == self_y - 1 or enemy_y == self_y - 2:
-                    if enemy_x >= self_x:
-                        self.shoot('right')
-                    else:
-                        self.shoot('left')
-            elif self.current_direction == 'down':
-                if enemy_y == self_y - 1 or enemy_y == self_y - 2:
-                    if enemy_x >= self_x:
-                        self.shoot('right')
-                    else:
-                        self.shoot('left')
+        if self.getMP() > 50:
+            for enemy in enemy_list :
+                enemy_x, enemy_y = enemy.getPosition()
+                
+                if self.current_direction == 'left' or self.current_direction == 'right':
+                    if abs(self_x - enemy_x <= 1):
+                        if enemy_y >= self_y:
+                            self.shoot('down')
+                        else:
+                            self.shoot('up')
+                elif self.current_direction == 'up' or self.current_direction == 'down':
+                    if abs(self_y - enemy_y <= 1):
+                        if enemy_x >= self_x:
+                            self.shoot('right')
+                        else:
+                            self.shoot('left')
   
