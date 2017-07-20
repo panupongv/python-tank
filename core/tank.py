@@ -226,6 +226,50 @@ class TankPrototype (pygame.sprite.Sprite):
     def getDirection(self):
         return self.__direction
     
+    def canMove(self, direction) :
+        if self.isAtEdge(direction) :
+            return False
+        
+        mx, my = self.getPosition()
+        if direction == 'left' :
+            mx -= 1
+        elif direction == 'right' :
+            mx += 1
+        elif direction == 'down' :
+            my += 1
+        elif direction == 'up' :
+            my -= 1
+        else :
+            raise
+        
+        for t in self.getTankInfoList() :
+            tx, ty = t.getPosition()
+            if not t.isMySelf(self) :
+                if mx == tx and my == ty :
+                    return False
+            
+        return True
+        
+    def getAllyList( self ):
+        ally_list = list()
+
+        for tank in self.getTankInfoList():
+            if(self.getName() == tank.getName()):
+                continue
+            elif(self.isAlly(tank)):
+                ally_list.append(tank)
+        return ally_list
+    
+    def getEnemyList( self ):
+        enemy_list = list()
+
+        for tank in self.getTankInfoList():
+            if (self.getName() == tank.getName()):
+                continue
+            elif (not self.isAlly(tank)):
+                enemy_list.append(tank)
+        return enemy_list
+    
     #for calling bars.draw() from main
     def drawBars(self, screen):
         self.__hp.draw(screen)
@@ -276,6 +320,9 @@ class TankInfo :
     
     def getDirection(self) :
         return self.__tank.getDirection()
+    
+    def canMove(self, direction) :
+        return self.__tank.canMove(direction)
     
     def isDead(self) :
         return self.__tank.isDead()
