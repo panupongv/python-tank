@@ -5,7 +5,7 @@ from core.constants import *
 class NameDisplay:
     def __init__(self, name):
         self.name = name
-        self.font = pygame.font.Font("source/waan.ttf", 5)
+        self.font = pygame.font.Font("source/waan.ttf", 50)
         self.text = self.font.render(name, True, WHITE)
         
     def draw(self, screen, x, y):
