@@ -84,6 +84,29 @@ class TankPrototype (pygame.sprite.Sprite):
         if self.__direction == "up" : return 2
         if self.__direction == "down" : return 3
     
+    def __clampOne(self, x) :
+        if x > 1 :
+            return 1
+        
+        return x
+            
+    def __updateMove(self) :
+        if not self.isMoving() :
+            return 
+        from_x = self.__from_grid_x*BLOCK_SIZE
+        from_y = self.__from_grid_y*BLOCK_SIZE
+        to_x = self.__to_grid_x*BLOCK_SIZE
+        to_y = self.__to_grid_y*BLOCK_SIZE
+        time_since_start_move = current_time() - self.__start_move_time
+        ratio = self.__clampOne(time_since_start_move/MOVE_TIME)
+        angle = ratio*pi/2
+        
+        self.rect.x  = from_x + sin(angle)*(to_x - from_x)
+        self.rect.y = from_y + sin(angle)*(to_y - from_y)
+        
+        if ratio >= 1 :
+            self.__is_moving = False
+            
     def __hidden_update(self):
         self.__move_cooldown -= 1 / FPS
         self.__shoot_cooldown -= 1 / FPS
@@ -116,29 +139,6 @@ class TankPrototype (pygame.sprite.Sprite):
 
     def readyToShoot(self):
         return self.__shoot_cooldown <= 0
-            
-    def __clampOne(self, x) :
-        if x > 1 :
-            return 1
-        
-        return x
-            
-    def __updateMove(self) :
-        if not self.isMoving() :
-            return 
-        from_x = self.__from_grid_x*BLOCK_SIZE
-        from_y = self.__from_grid_y*BLOCK_SIZE
-        to_x = self.__to_grid_x*BLOCK_SIZE
-        to_y = self.__to_grid_y*BLOCK_SIZE
-        time_since_start_move = current_time() - self.__start_move_time
-        ratio = self.__clampOne(time_since_start_move/MOVE_TIME)
-        angle = ratio*pi/2
-        
-        self.rect.x  = from_x + sin(angle)*(to_x - from_x)
-        self.rect.y = from_y + sin(angle)*(to_y - from_y)
-        
-        if ratio >= 1 :
-            self.__is_moving = False
         
     def move(self, direction) :
         if not self.readyToMove() :
@@ -208,7 +208,7 @@ class TankPrototype (pygame.sprite.Sprite):
     def isMoving(self):
         return self.__is_moving
     
-    def getTankInfoList(self):
+    def __getTankInfoList(self):
         return self.__game.getTankInfoList()
     
     def isAtEdge(self, direction):
@@ -250,6 +250,26 @@ class TankPrototype (pygame.sprite.Sprite):
             
         return True
         
+    def getAllyList( self ):
+        ally_list = list()
+
+        for tank in self.__getTankInfoList():
+            if(self.getName() == tank.getName()):
+                continue
+            elif(self.isAlly(tank)):
+                ally_list.append(tank)
+        return ally_list
+    
+    def getEnemyList( self ):
+        enemy_list = list()
+
+        for tank in self.__getTankInfoList():
+            if (self.getName() == tank.getName()):
+                continue
+            elif (not self.isAlly(tank)):
+                enemy_list.append(tank)
+        return enemy_list
+    
     #for calling bars.draw() from main
     def drawBars(self, screen):
         self.__hp.draw(screen)
