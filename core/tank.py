@@ -55,6 +55,8 @@ class TankPrototype (pygame.sprite.Sprite):
                 if self.__hp <= 0:
                     self.__dead = True
                     self.rect.x = self.rect.y = -100
+                    self.__grid_x = -100
+                    self.__grid_y = -100
                     self.kill()
                 elif self.__hp > MAX_HP:
                     self.__hp = MAX_HP
