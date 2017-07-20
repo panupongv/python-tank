@@ -140,29 +140,38 @@ class TankPrototype (pygame.sprite.Sprite):
            (direction == "down" and self.__grid_y == 9):
             return
         
-        self.__direction = direction
-        self.__from_grid_x = self.__grid_x
-        self.__from_grid_y = self.__grid_y
-        self.__start_move_time = current_time()
+        next_x = self.__grid_x
+        next_y = self.__grid_y
         
-        self.__is_moving = True
         if direction == 'left' :
-            self.__grid_x -= 1
-            self.image = self.images[0]
+            next_x -= 1
         elif direction == 'right' :
-            self.__grid_x += 1
-            self.image = self.images[1]
+            next_x += 1
         elif direction == 'up' :
-            self.__grid_y -= 1
-            self.image = self.images[2]
+            next_y -= 1
         elif direction == 'down' :
-            self.__grid_y += 1
-            self.image = self.images[3]
+            next_y += 1
         else :
             raise ValueError('unknown direction given : ' + str(direction))
         
-        self.__to_grid_x = self.__grid_x
-        self.__to_grid_y = self.__grid_y
+        for tank in self.getTankInfoList() :
+            if not tank.isMySelf(self) :
+                tx, ty = tank.getPosition()
+                if tx == next_x and ty == next_y :
+                    return
+    
+        self.__direction = direction        
+        self.image = self.images[self.__getIndex()]    
+        self.__from_grid_x = self.__grid_x
+        self.__from_grid_y = self.__grid_y
+        self.__start_move_time = current_time()
+    
+        self.__is_moving = True
+        
+        self.__to_grid_x = next_x
+        self.__to_grid_y = next_y
+        self.__grid_x = next_x
+        self.__grid_y = next_y
 
         # decrease mp when move
         self.__mp -= MOVE_MANA_COST
