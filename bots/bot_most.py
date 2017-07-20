@@ -36,8 +36,9 @@ class FuckBot420 ( TankPrototype ):
         self_x, self_y = self.getPosition()
         
         choice = random.randint(0, 3)
+        choice2 = random.randint(0, 3)
         '''change direction when this tank is at the edge of the battle field'''
-        if self.isAtEdge(self.current_direction) or choice == 3 :
+        if self.isAtEdge(self.current_direction) or choice * choice2 == 9 :
             if self.current_direction == 'left' :
                 if choice == 2:
                     self.current_direction = 'right'  
