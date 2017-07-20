@@ -39,9 +39,7 @@ class TankPrototype (pygame.sprite.Sprite):
 
         game.add_hidden_update(self.__hidden_update)
         self.__game = game
-
-        #variable for move testing
-        self.move_count = 3
+        self.start()
 
     #private methods ( internal use only, other cant use it, it's danger to allow so )
     def __checkBulletCollision(self):
@@ -75,10 +73,10 @@ class TankPrototype (pygame.sprite.Sprite):
             self.__grid_y = 9
 
     def __getIndex(self):
-        if self.__direction == "left": return 0
-        if self.__direction == "right": return 1
-        if self.__direction == "up": return 2
-        if self.__direction == "down": return 3
+        if self.__direction == "left" : return 0
+        if self.__direction == "right" : return 1
+        if self.__direction == "up" : return 2
+        if self.__direction == "down" : return 3
     
     def __hidden_update(self):
         self.__move_cooldown -= 1 / FPS
@@ -131,8 +129,6 @@ class TankPrototype (pygame.sprite.Sprite):
         
         if ratio >= 1 :
             self.__is_moving = False
-            self.__gird_x = self.__to_grid_x
-            self.__gird_y = self.__to_grid_y
         
     def move(self, direction) :
         if not self.readyToMove() :
@@ -193,6 +189,18 @@ class TankPrototype (pygame.sprite.Sprite):
     def getTankInfoList(self):
         return self.__game.getTankInfoList()
     
+    def isAtEdge(self, direction):
+        if direction == 'left' and self.__grid_x == 0 :
+            return True
+        if direction == 'right' and self.__grid_x == 9 :
+            return True
+        if direction == 'up' and self.__grid_y == 0 :
+            return True
+        if direction == 'down' and self.__grid_y == 9 :
+            return True
+        
+        return False
+    
     #for calling bars.draw() from main
     def drawBars(self, screen):
         self.__hp.draw(screen)
@@ -200,6 +208,9 @@ class TankPrototype (pygame.sprite.Sprite):
         
     #this is pseudo abstract method ( should be override )
     #the update process that should not be invoked from outside is in hidden_update() method
+    def start(self):
+        pass
+    
     def update(self):
         pass
     
@@ -233,4 +244,7 @@ class TankInfo :
     
     def isMySelf(self, my_tank) :
         return my_tank == self.__tank
+    
+    def isAtEdge(self, direction) :
+        return self.__tank.isAtEdge(direction)
 

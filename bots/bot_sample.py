@@ -16,10 +16,18 @@ class BotSample ( TankPrototype ):
     shoot(direction)       fire a bullet in the specified direction ('left' 'right' 'up' 'down') : cost ?? mana
     heal(direction)        fire a potion in the specified direction ('left' 'right' 'up' 'down')
     '''
+    def start( self ) :
+        self.current_direction = 'left'
     
     def update( self ) :
         #code your algorithm here        
-        self.move('right')
+        if self.isAtEdge(self.current_direction) :
+            if self.current_direction == 'left' :
+                self.current_direction = 'right'
+            elif self.current_direction == 'right' :
+                self.current_direction = 'left'
+                
+        self.move(self.current_direction)
         
         info_list = self.getTankInfoList()
         for info in info_list :
