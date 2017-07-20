@@ -90,9 +90,28 @@ class FuckBot420 ( TankPrototype ):
         for enemy in enemy_list :
             enemy_x, enemy_y = enemy.getPosition()
             
-            if self_x == enemy_x :      #if on the same column
-                if enemy_y < self_y :   #enemy is located above
-                    self.shoot('up')
-                else :                  #enemy is located below
-                    self.shoot('down')
+            if self.current_direction == 'left':
+                if enemy_x == self_x - 1 or enemy_x == self_x - 2:
+                    if enemy_y >= self_y:
+                        self.shoot('down')
+                    else:
+                        self.shoot('up')
+            elif self.current_direction == 'right':
+                if enemy_x == self_x + 1 or enemy_x == self_x + 2:
+                    if enemy_y >= self_y:
+                        self.shoot('down')
+                    else:
+                        self.shoot('up')
+            elif self.current_direction == 'up':
+                if enemy_y == self_y - 1 or enemy_y == self_y - 2:
+                    if enemy_x >= self_x:
+                        self.shoot('right')
+                    else:
+                        self.shoot('left')
+            elif self.current_direction == 'down':
+                if enemy_y == self_y - 1 or enemy_y == self_y - 2:
+                    if enemy_x >= self_x:
+                        self.shoot('right')
+                    else:
+                        self.shoot('left')
   
