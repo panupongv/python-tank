@@ -140,6 +140,7 @@ class TankPrototype (pygame.sprite.Sprite):
            (direction == "down" and self.__grid_y == 9):
             return
         
+        self.__direction = direction
         self.__from_grid_x = self.__grid_x
         self.__from_grid_y = self.__grid_y
         self.__start_move_time = current_time()
@@ -201,6 +202,9 @@ class TankPrototype (pygame.sprite.Sprite):
         
         return False
     
+    def getDirection(self):
+        return self.__direction
+    
     #for calling bars.draw() from main
     def drawBars(self, screen):
         self.__hp.draw(screen)
@@ -247,4 +251,7 @@ class TankInfo :
     
     def isAtEdge(self, direction) :
         return self.__tank.isAtEdge(direction)
+    
+    def getDirection(self) :
+        return self.__tank.getDirection()
 
