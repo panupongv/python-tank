@@ -33,7 +33,7 @@ class BotSample ( TankPrototype ):
         #this method will be called every millisecond
         #code your algorithm here and it will affect your tank action
         
-        '''change direction when this tank is at the edge of the battle field'''
+        '''change current_direction when this tank is at the edge of the battle field'''
         if self.isAtEdge(self.current_direction) :
             if self.current_direction == 'left' :
                 self.current_direction = 'right'
@@ -43,20 +43,10 @@ class BotSample ( TankPrototype ):
         '''then move it to the determined direction'''
         self.move(self.current_direction)
         
-        '''we can get the information of all the tanks in the field from getTankInfoList() method'''
-        tank_list = self.getTankInfoList()
-        
-        '''the info list obtained is mixed with ally and enemy ( including yourself )'''
-        '''it is not a bad idea to classify it first'''
-        ally_list = []
-        enemy_list = []
-        for tank in tank_list :
-            if tank.isAlly(self) and not tank.isMySelf(self) :
-                ally_list.append(tank)
-            elif tank.isAlly(self) == False :
-                enemy_list.append(tank)
+        '''get enemy list from method .getEnemyList()'''
+        enemy_list = self.getEnemyList()
                 
-        '''then we check where the enemies are and shoot them'''
+        '''then we check for any enemy locate in the same column and shoot it'''
         for enemy in enemy_list :
             self_x, self_y = self.getPosition()
             enemy_x, enemy_y = enemy.getPosition()
