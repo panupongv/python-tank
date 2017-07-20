@@ -101,14 +101,11 @@ class Game:
             if winner != "draw":
                 for s in self.sprite_list:
                     s.update()
-            #self.sprite_list.update()
             self.processEvents()
             self.clock.tick(FPS)
             if winner == "":
                 self.timeleft -= (1 / FPS)
                 if self.timeleft < 0:
                     winner = "draw"
-
-
 
 Game().main()
