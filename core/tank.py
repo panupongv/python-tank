@@ -181,6 +181,5 @@ class TankPrototype (pygame.sprite.Sprite):
     #this is pseudo abstract method ( should be override )
     #the update process that should not be invoked from outside is in hidden_update() method
     def update(self):
-        pass
+        pass 
 
-  
