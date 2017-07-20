@@ -6,6 +6,7 @@ from core.bar import Bar
 from core.namedisplay import NameDisplay
 from time import time as current_time
 from math import pi, sin
+from random import random
 
 class TankPrototype (pygame.sprite.Sprite):
     #constructor
@@ -38,7 +39,7 @@ class TankPrototype (pygame.sprite.Sprite):
         self.__speed_y = 0
         
         self.__shoot_cooldown = SHOOT_COOLDOWN
-        self.__move_cooldown = MOVE_COOLDOWN
+        self.__move_cooldown = MOVE_COOLDOWN + random()/4
         self.__move_counter = 0
 
         game.add_hidden_update(self.__hidden_update)
@@ -64,19 +65,6 @@ class TankPrototype (pygame.sprite.Sprite):
 
     def __resetShootCooldown(self):
         self.__shoot_cooldown = SHOOT_COOLDOWN
-
-    def __clamp_grid_pos(self):
-        if self.__grid_x < 0 :
-            self.__grid_x = 0
-            
-        if self.__grid_x > 9 :
-            self.__grid_x = 9
-            
-        if self.__grid_y < 0 :
-            self.__grid_y = 0
-            
-        if self.__grid_y > 9 :
-            self.__grid_y = 9
 
     def __getIndex(self):
         if self.__direction == "left" : return 0
