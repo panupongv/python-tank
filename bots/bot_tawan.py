@@ -33,15 +33,15 @@ class BotTawan ( TankPrototype ):
         
     def move_to_tank( self, target_tank):
         enemy_x, enemy_y = target_tank.getPosition()
-        if self.x < enemy_x:
-            self.move("right")
-        elif self.x > enemy_x:
-            self.move("left")
-        elif self.x == enemy_x:
-            if self.y < enemy_y:
-                self.move("down")
-            elif self.y > enemy_y:
-                self.move("up")
+        if self.y < enemy_y:
+            self.move("down")
+        elif self.y > enemy_y:
+            self.move("up")
+        elif self.y == enemy_y:
+            if self.x < enemy_x:
+                self.move("right")
+            elif self.x > enemy_x:
+                self.move("left")
 
     def which_is_closer( self, tank1, tank2):
         tank1_x, tank1_y = tank1.getPosition()
