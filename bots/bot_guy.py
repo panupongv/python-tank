@@ -34,9 +34,14 @@ class BotGuy ( TankPrototype ):
     def update( self ) :
         #Op method dat will reck ya enemy
         print("update guy")
+
+        for tank in self.getTankInfoList():
+            direction = self.SuggestionFire(self,tank)
+            if(direction == 'none'):
+                continue
                         
     # return direction if in range , return None if not in range              
-    def SuggestionFire(tank_me, tank_other):
+    def SuggestionFire(self,tank_me, tank_other):
         x_other , y_other = tank_other.getPosition()
         x_me , y_me = tank_me.getPosition()
         
