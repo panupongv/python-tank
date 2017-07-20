@@ -34,7 +34,7 @@ class FuckBot420 ( TankPrototype ):
         self_x, self_y = self.getPosition()
         choice = random.randint(0, 3)
         choice2 = random.randint(0, 3)
-        if not self.canMove(self.current_direction) or choice * choice2 == 9:
+        if (self.isAtEdge(self.current_direction) or self.isBlocked(self.current_direction) ) or choice * choice2 == 9:
             if self.current_direction == 'left' :
                 if choice == 2:
                     self.current_direction = 'right'  

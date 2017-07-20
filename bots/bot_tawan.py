@@ -34,7 +34,7 @@ class BotTawan ( TankPrototype ):
         #code your algorithm here and it will effect your tank action
         
         '''change direction when this tank is at the edge of the battle field'''
-        if not self.canMove(self.current_direction) :
+        if self.isAtEdge(self.current_direction) or self.isBlocked(self.current_direction) :
             if self.current_direction == 'left' :
                 self.current_direction = 'right'
             elif self.current_direction == 'right' :
