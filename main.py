@@ -2,7 +2,7 @@ import pygame, sys, time
 
 from bots.bot_tawan import BotTawan
 from bots.bot_guy import BotGuy
-from bots.bot_most import FuckBot420
+from bots.bot_most import BotMost
 from bots.bot_eit import BotEit
 
 from core.constants import *
@@ -29,7 +29,7 @@ class Game:
         self.__timeleftdisplay = TimeDisplay("...",TIME_LABLE_SIZE)
 
         tank_tawan = BotTawan(self, 'tawan', 'green', 0, 0, 'right', self.sprite_list, self.tank_list)
-        tank_most = FuckBot420(self, 'fuck bot 420', "red", 9, 0, "up", self.sprite_list, self.tank_list)
+        tank_most = BotMost(self, 'most', "red", 9, 0, "up", self.sprite_list, self.tank_list)
         tank_guy = BotGuy(self, 'guy', "red", 0, 9, "down", self.sprite_list, self.tank_list)
         tank_eit = BotEit(self, 'eit', "green", 9, 9, "left", self.sprite_list, self.tank_list)
     
