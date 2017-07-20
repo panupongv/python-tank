@@ -3,6 +3,7 @@ import pygame
 from core.constants import *
 from core.bullet import Bullet_Heal, Bullet_Damage
 from core.bar import Bar
+from time import time as current_time
 
 class TankPrototype (pygame.sprite.Sprite):
     #constructor
@@ -83,15 +84,7 @@ class TankPrototype (pygame.sprite.Sprite):
         self.__move_cooldown -= 1 / FPS
         self.__shoot_cooldown -= 1 / FPS
         self.__mp += MP_REGEN_RATE / FPS
-
-        if self.__is_moving:
-            self.rect.x += self.__speed_x
-            self.rect.y += self.__speed_y
-            self.__move_counter -= 1
-            if self.__move_counter == 0:
-                self.__is_moving = False
-                self.__grid_x = self.rect.x // BLOCK_SIZE
-                self.__grid_y = self.rect.y // BLOCK_SIZE
+        self.__updateMove()
                 
         self.__hp.updatePosition(self.rect.x, self.rect.y)
         self.__mp.updatePosition(self.rect.x, self.rect.y + BAR_HEIGHT)
@@ -112,13 +105,37 @@ class TankPrototype (pygame.sprite.Sprite):
         return self.__team_color == tank.getTeamColor()
 
     def readyToMove(self):
-        return self.__move_cooldown <= 0 and self.__move_counter == 0
+        return self.__move_cooldown <= 0 and not self.isMoving()
 
     def readyToShoot(self):
         return self.__shoot_cooldown <= 0
             
+    def __clampOne(self, x) :
+        if x > 1 :
+            return 1
+        
+        return x
+            
+    def __updateMove(self) :
+        if not self.isMoving() :
+            return 
+        from_x = self.__from_grid_x*BLOCK_SIZE
+        from_y = self.__from_grid_y*BLOCK_SIZE
+        to_x = self.__to_grid_x*BLOCK_SIZE
+        to_y = self.__to_grid_y*BLOCK_SIZE
+        time_since_start_move = current_time() - self.__start_move_time
+        ratio = self.__clampOne(time_since_start_move/MOVE_TIME)
+        
+        self.rect.x  = from_x + ratio*(to_x - from_x)
+        self.rect.y = from_y + ratio*(to_y - from_y)
+        
+        if ratio >= 1 :
+            self.__is_moving = False
+            self.__gird_x = self.__to_grid_x
+            self.__gird_y = self.__to_grid_y
+        
     def move(self, direction) :
-        if not self.readyToMove():
+        if not self.readyToMove() :
             return
 
         if (direction == "left" and self.__grid_x == 0) or \
@@ -126,30 +143,30 @@ class TankPrototype (pygame.sprite.Sprite):
            (direction == "up" and self.__grid_y == 0) or \
            (direction == "down" and self.__grid_y == 9):
             return
-
-        self.move_count -= 1
+        
+        self.__from_grid_x = self.__grid_x
+        self.__from_grid_y = self.__grid_y
+        self.__start_move_time = current_time()
+        
         self.__is_moving = True
-        self.__move_counter = BLOCK_SIZE
         if direction == 'left' :
-            self.__speed_x = -1
-            self.__speed_y = 0
+            self.__grid_x -= 1
             self.image = self.images[0]
         elif direction == 'right' :
-            self.__speed_x = 1
-            self.__speed_y = 0
+            self.__grid_x += 1
             self.image = self.images[1]
         elif direction == 'up' :
-            self.__speed_x = 0
-            self.__speed_y = -1
+            self.__grid_y -= 1
             self.image = self.images[2]
         elif direction == 'down' :
-            self.__speed_x = 0
-            self.__speed_y = 1
+            self.__grid_y += 1
             self.image = self.images[3]
         else :
             raise ValueError('unknown direction given : ' + str(direction))
-
-        self.__clamp_grid_pos()
+        
+        self.__to_grid_x = self.__grid_x
+        self.__to_grid_y = self.__grid_y   
+        
         self.__resetMoveCooldown()
 
     def shoot(self, direction):
