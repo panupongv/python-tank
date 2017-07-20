@@ -17,32 +17,45 @@ class BotSample ( TankPrototype ):
     heal(direction)        fire a potion in the specified direction ('left' 'right' 'up' 'down')
     '''
     def start( self ) :
+        #this method will be call at the beginning once
+        #use this to initialize variable you will use in your tank algorithm
         self.current_direction = 'left'
     
     def update( self ) :
-        #code your algorithm here        
+        #this method will be called every millisecond
+        #code your algorithm here and it will effect your tank action
+        
+        '''change direction when this tank is at the edge of the battle field'''
         if self.isAtEdge(self.current_direction) :
             if self.current_direction == 'left' :
                 self.current_direction = 'right'
             elif self.current_direction == 'right' :
                 self.current_direction = 'left'
                 
+        '''then move it to the determined direction'''
         self.move(self.current_direction)
         
+        '''we can get the information of all the tanks in the field from getTankInfoList() method'''
         tank_list = self.getTankInfoList()
+        
+        '''the info list obtained is mixed with ally and enemy ( including yourself )'''
+        '''it is not a bad idea to classify it first'''
         ally_list = []
         enemy_list = []
-        
         for tank in tank_list :
             if tank.isAlly(self) and not tank.isMySelf(self) :
                 ally_list.append(tank)
             elif tank.isAlly(self) == False :
                 enemy_list.append(tank)
                 
+        '''then we check where the enemies are and shoot them'''
         for enemy in enemy_list :
-            if enemy.getPosition()[0] == self.getPosition()[0]:
-                if enemy.getPosition()[1] < self.getPosition()[0] :
+            self_x, self_y = self.getPosition()
+            enemy_x, enemy_y = enemy.getPosition()
+            
+            if self_x == enemy_x :      #if on the same column
+                if enemy_y < self_y :   #enemy is located above
                     self.shoot('up')
-                else :
+                else :                  #enemy is located below
                     self.shoot('down')
   
