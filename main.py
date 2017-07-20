@@ -18,8 +18,9 @@ class Game:
         self.background = pygame.image.load("source/bg.png")
         self.red_won = pygame.image.load("source/red_won.png")
         self.green_won = pygame.image.load("source/green_won.png")
+        self.draw = pygame.image.load("source/draw.png")
         self.clock = pygame.time.Clock()
-        self.screen = pygame.display.set_mode([650, 650])
+        self.screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
         
         self.sprite_list = pygame.sprite.Group()
         self.tank_list = pygame.sprite.Group()
@@ -80,26 +81,33 @@ class Game:
             self.sprite_list.draw(self.screen)
             for tank in self.tank_list:
                 tank.drawBars(self.screen)
-            if winner == "green":
+            if winner == "draw":
+                self.screen.blit(self.draw, [0, (SCREEN_WIDTH - BLOCK_SIZE)/2])
+            elif winner == "green":
                 self.screen.blit(self.green_won, [0, (SCREEN_WIDTH - BLOCK_SIZE)/2])
             elif winner == "red":
                 self.screen.blit(self.red_won, [0, (SCREEN_WIDTH - BLOCK_SIZE)/2])
             pygame.display.update()
 
             ##Logics
-            if self.lost("red"):
-                winner = "green"
+            if self.lost("red") and self.lost("green"):
+                winner = "draw"
             elif self.lost("green"):
                 winner = "red"
+            elif self.lost("red"):
+                winner = "green"
             [ func() for func in self.__hidden_update_list ]
             self.clearDestroyedTankInfo()
-            for s in self.sprite_list:
-                s.update()
+            if winner != "draw":
+                for s in self.sprite_list:
+                    s.update()
             #self.sprite_list.update()
             self.processEvents()
             self.clock.tick(FPS)
             if winner == "":
                 self.timeleft -= (1 / FPS)
+                if self.timeleft < 0:
+                    winner = "draw"
 
 
 
