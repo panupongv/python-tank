@@ -47,11 +47,10 @@ class Game:
                     sys.exit()
                     
     def clearDestroyedTankInfo(self):
-        for t in self.__tank_info_list[:] :
-            try :
-                t.getName()
-            except :
-                self.__tank_info_list.remove(t)
+        for i,t in enumerate(self.__tank_info_list) :
+            if t.isDead() :
+                del self.__tank_info_list[i]
+                break
         
     def getTankInfoList(self):
         return self.__tank_info_list[:]

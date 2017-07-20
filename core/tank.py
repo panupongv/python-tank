@@ -276,4 +276,7 @@ class TankInfo :
     
     def getDirection(self) :
         return self.__tank.getDirection()
+    
+    def isDead(self) :
+        return self.__tank.isDead()
 
