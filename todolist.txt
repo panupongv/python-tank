@@ -3,9 +3,10 @@ modulize
 hidden update
 4head tank
 hp mp bar
+position detection methods with encapsulation
+smooth movement
 
 [todo]
-position detection methods with encapsulation
 new main
 2 mode main ( for battle and for training )
 adjust game rules
