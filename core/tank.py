@@ -239,6 +239,11 @@ class TankPrototype (pygame.sprite.Sprite):
             if mx == tx and my == ty :
                 return True
             
+        for t in self.getEnemyList() :
+            tx, ty = t.getPosition()
+            if mx == tx and my == ty :
+                return True
+            
         return False
         
     def getDirection(self):
