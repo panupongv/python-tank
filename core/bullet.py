@@ -14,12 +14,12 @@ class Bullet (pygame.sprite.Sprite) :
         
         self.__owner_name = tank.getName()
 
-        x, y = tank.getPosition()
+        x, y = tank.rect.x + tank.rect.width/2, tank.rect.y + tank.rect.height/2
         self.__setStartPosition( x, y )
 
     def __setStartPosition( self, x, y ) :
-        self.rect.x = x*BLOCK_SIZE + BLOCK_SIZE / 2 - self.rect.width / 2
-        self.rect.y = y*BLOCK_SIZE + BLOCK_SIZE / 2 - self.rect.height / 2
+        self.rect.x = x - self.rect.width / 2
+        self.rect.y = y - self.rect.height / 2
         
     def __createBulletRect( self , image_path ) :
         path = os.path.join(image_path)

@@ -21,15 +21,26 @@ class TankPrototype (pygame.sprite.Sprite):
         self.__direction = direction
         self.image = self.images[self.__getIndex()]
         self.rect = self.image.get_rect()
-        
+
         self.__grid_x = x
         self.__grid_y = y
 
+        self.rect.x = x * BLOCK_SIZE
+        self.rect.y = y * BLOCK_SIZE
+        
+        self.__is_moving = False
+        self.__speed_x = 0
+        self.__speed_y = 0
+        
         self.__shoot_cooldown = SHOOT_COOLDOWN
         self.__move_cooldown = MOVE_COOLDOWN
+        self.__move_counter = 0
 
         game.add_hidden_update(self.__hidden_update)
         self.__game = game
+
+        #variable for move testing
+        self.move_count = 3
 
     #private methods ( internal use only, other cant use it, it's danger to allow so )
     def __checkBulletCollision(self):
@@ -72,10 +83,16 @@ class TankPrototype (pygame.sprite.Sprite):
         self.__move_cooldown -= 1 / FPS
         self.__shoot_cooldown -= 1 / FPS
         self.__mp += MP_REGEN_RATE / FPS
-    
-        self.rect.x = self.__grid_x * BLOCK_SIZE
-        self.rect.y = self.__grid_y * BLOCK_SIZE
 
+        if self.__is_moving:
+            self.rect.x += self.__speed_x
+            self.rect.y += self.__speed_y
+            self.__move_counter -= 1
+            if self.__move_counter == 0:
+                self.__is_moving = False
+                self.__grid_x = self.rect.x // BLOCK_SIZE
+                self.__grid_y = self.rect.y // BLOCK_SIZE
+                
         self.__hp.updatePosition(self.rect.x, self.rect.y)
         self.__mp.updatePosition(self.rect.x, self.rect.y + BAR_HEIGHT)
 
@@ -95,29 +112,39 @@ class TankPrototype (pygame.sprite.Sprite):
         return self.__team_color
 
     def readyToMove(self):
-        return self.__move_cooldown <= 0
+        return self.__move_cooldown <= 0 and self.__move_counter == 0
 
     def readyToShoot(self):
         return self.__shoot_cooldown <= 0
             
     def move(self, direction) :
-        if not self.readyToMove() :
+        if not self.readyToMove():
             return
 
+        if (direction == "left" and self.__grid_x == 0) or \
+           (direction == "right" and self.__grid_x == 9) or \
+           (direction == "up" and self.__grid_y == 0) or \
+           (direction == "down" and self.__grid_y == 9):
+            return
+
+        self.move_count -= 1
+        self.__is_moving = True
+        self.__move_counter = BLOCK_SIZE
         if direction == 'left' :
-            self.__grid_x -= 1
+            self.__speed_x = -1
+            self.__speed_y = 0
             self.image = self.images[0]
-            
         elif direction == 'right' :
-            self.__grid_x += 1
+            self.__speed_x = 1
+            self.__speed_y = 0
             self.image = self.images[1]
-            
         elif direction == 'up' :
-            self.__grid_y -= 1
+            self.__speed_x = 0
+            self.__speed_y = -1
             self.image = self.images[2]
-            
         elif direction == 'down' :
-            self.__grid_y += 1
+            self.__speed_x = 0
+            self.__speed_y = 1
             self.image = self.images[3]
         else :
             raise ValueError('unknown direction given : ' + str(direction))
@@ -143,6 +170,9 @@ class TankPrototype (pygame.sprite.Sprite):
     def getPosition(self):
         return self.rect.x // BLOCK_SIZE, self.rect.y // BLOCK_SIZE
 
+    def isMoving(self):
+        return self.__is_moving
+    
     #for calling bars.draw() from main
     def drawBars(self, screen):
         self.__hp.draw(screen)

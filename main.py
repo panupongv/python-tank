@@ -18,6 +18,7 @@ class Game:
         self.bullet_list = pygame.sprite.Group()
       
         tank1 = BotSample(self, 1, "green", 0, 0, "right", self.sprite_list, self.tank_list)
+        tank2 = BotSample(self, 2, "red", 2, 2, "down", self.sprite_list, self.tank_list)
 
     def add_hidden_update(self, func):
         try :

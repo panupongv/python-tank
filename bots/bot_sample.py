@@ -22,6 +22,5 @@ class BotSample ( TankPrototype ):
         super().update()
         self.shoot('down')
         self.move('right')
-        
 
   
