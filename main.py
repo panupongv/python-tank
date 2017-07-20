@@ -70,7 +70,6 @@ class Game:
         self.__timeleftdisplay.updateText(timetext)
         self.__timeleftdisplay.draw(self.screen,SCREEN_WIDTH // 2,SCREEN_HEIGHT // 2)
 
-
     def main(self):
         winner = ""
         while True:
@@ -94,7 +93,9 @@ class Game:
                 winner = "red"
             [ func() for func in self.__hidden_update_list ]
             self.clearDestroyedTankInfo()
-            self.sprite_list.update()
+            for s in self.sprite_list:
+                s.update()
+            #self.sprite_list.update()
             self.processEvents()
             self.clock.tick(FPS)
             if winner == "":
