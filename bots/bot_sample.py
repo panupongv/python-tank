@@ -21,7 +21,7 @@ class BotSample ( TankPrototype ):
     readyToShoot()         check if ready to shoot ( also check cooldown and mana cost )
     move(direction)        move forward in the specified direction ('left' 'right' 'up' 'down')
     shoot(direction)       fire a bullet in the specified direction ('left' 'right' 'up' 'down') : cost ?? mana
-    heal(direction)        fire a potion in the specified direction ('left' 'right' 'up' 'down') : cost ?? mana
+    shoot_heal(direction)  fire a potion in the specified direction ('left' 'right' 'up' 'down') : cost ?? mana
     '''
     
     def start( self ) :
