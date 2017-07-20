@@ -70,17 +70,16 @@ class Bullet (pygame.sprite.Sprite) :
     def getDamage( self ) :
         return self.__bullet_damage
 
-
 class Bullet_Heal(Bullet):
     def __init__( self, tank, direction, *group) :
-        damage = -5
-        speed = 60
+        damage = HEAL_BULLET_DAMAGE
+        speed = HEAL_BULLET_SPEED
         super().__init__( tank, direction, "source/heart.png", damage, speed, *group) #add
 
 class Bullet_Damage(Bullet):
     def __init__( self, tank, direction, *group) :
-        damage = 10
-        speed = 180
+        damage = DAMAGE_BULLET_DAMAGE
+        speed = DAMAGE_BULLET_SPEED
         super().__init__( tank, direction, "source/bullet.png", damage, speed, *group) #add
 
         
