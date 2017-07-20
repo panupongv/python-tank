@@ -104,7 +104,7 @@ class TankPrototype (pygame.sprite.Sprite):
         return self.__team_color == tank.getTeamColor()
 
     def readyToMove(self):
-        return self.__move_cooldown <= 0 and not self.isMoving()
+        return self.__move_cooldown <= 0 and not self.isMoving() and self.getMP() >= DAMAGE_BULLET_MANA_COST
 
     def readyToShoot(self):
         return self.__shoot_cooldown <= 0
