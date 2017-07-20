@@ -29,10 +29,10 @@ class Game:
         self.timeleft = MATCH_TIME
         self.__timeleftdisplay = TimeDisplay("...",TIME_LABLE_SIZE)
 
-        tank_tawan = BotTawan(self, 'tawan', 'green', 0, 0, 'right', self.sprite_list, self.tank_list)
-        tank_most = BotMost(self, 'most', "red", 9, 0, "up", self.sprite_list, self.tank_list)
-        tank_guy = BotGuy(self, 'guy', "red", 0, 9, "down", self.sprite_list, self.tank_list)
-        tank_eit = BotEit(self, 'eit', "green", 9, 9, "left", self.sprite_list, self.tank_list)
+        tank_tawan = BotTawan(self, 'tawan', 'green', 1, 1, 'right', self.sprite_list, self.tank_list)
+        tank_most = BotMost(self, 'most', "red", 8, 1, "up", self.sprite_list, self.tank_list)
+        tank_guy = BotGuy(self, 'guy', "red", 1, 8, "down", self.sprite_list, self.tank_list)
+        tank_eit = BotEit(self, 'eit', "green", 8, 8, "left", self.sprite_list, self.tank_list)
     
         self.__tank_info_list = [ TankInfo(tank) for tank in self.tank_list ]
 
