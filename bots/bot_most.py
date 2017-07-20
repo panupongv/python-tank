@@ -38,7 +38,7 @@ class BotMost ( TankPrototype ):
         if not self.__inCorner():
             if self.current_x != self.corner_x:
                 self.move(self.move_directions[0])
-            elif self.current_y != self.cornert_y:
+            elif self.current_y != self.corner_y:
                 self.move(self.move_directions[1])
         else:
             for enemy in self.getEnemyList():
