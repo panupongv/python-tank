@@ -18,8 +18,7 @@ class BotSample ( TankPrototype ):
     '''
     
     def update( self ) :
-        #code your algorithm here
-        super().update()
+        #code your algorithm here        
         self.move('right')
         
         info_list = self.getTankInfoList()
