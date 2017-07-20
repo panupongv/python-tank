@@ -183,7 +183,7 @@ class TankPrototype (pygame.sprite.Sprite):
             self.__resetShootCooldown()
             self.__mp -= DAMAGE_BULLET_MANA_COST
 
-    def heal(self, direction):
+    def shoot_heal(self, direction):
         if self.readyToShoot() and self.__mp.getValue() - HEAL_BULLET_MANA_COST >= 0:
             bullet = Bullet_Heal(self, direction, self.__game.sprite_list, self.__game.bullet_list)
             self.__resetShootCooldown()
