@@ -70,20 +70,19 @@ class FuckBot420 ( TankPrototype ):
         self.move(self.current_direction)
         
         enemy_list = self.getEnemyList()
-        if self.getMP() > 50:
-            for enemy in enemy_list :
-                enemy_x, enemy_y = enemy.getPosition()
-                
-                if self.current_direction == 'left' or self.current_direction == 'right':
-                    if abs(self_x - enemy_x <= 1):
-                        if enemy_y >= self_y:
-                            self.shoot('down')
-                        else:
-                            self.shoot('up')
-                elif self.current_direction == 'up' or self.current_direction == 'down':
-                    if abs(self_y - enemy_y <= 1):
-                        if enemy_x >= self_x:
-                            self.shoot('right')
-                        else:
-                            self.shoot('left')
+        for enemy in enemy_list :
+            enemy_x, enemy_y = enemy.getPosition()
+            
+            if self.current_direction == 'left' or self.current_direction == 'right':
+                if abs(self_x - enemy_x <= 1):
+                    if enemy_y >= self_y:
+                        self.shoot('down')
+                    else:
+                        self.shoot('up')
+            elif self.current_direction == 'up' or self.current_direction == 'down':
+                if abs(self_y - enemy_y <= 1):
+                    if enemy_x >= self_x:
+                        self.shoot('right')
+                    else:
+                        self.shoot('left')
   
