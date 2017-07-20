@@ -3,7 +3,7 @@ from math import *
 
 from core.tank import TankPrototype
 
-class BotEit ( TankPrototype ):
+class BotTawan ( TankPrototype ):
     #because this bot class is inherited from TankPrototype class
     #this class will derive and obtain all public methods available in TankPrototype
     #the methods available for use listed below
