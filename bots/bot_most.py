@@ -31,14 +31,10 @@ class FuckBot420 ( TankPrototype ):
         self.current_direction = 'left'
     
     def update( self ) :
-        #this method will be called every millisecond
-        #code your algorithm here and it will effect your tank action
         self_x, self_y = self.getPosition()
-        
         choice = random.randint(0, 3)
         choice2 = random.randint(0, 3)
-        '''change direction when this tank is at the edge of the battle field'''
-        if self.isAtEdge(self.current_direction) or choice * choice2 == 9 :
+        if not self.canMove(self.current_direction) or choice * choice2 == 9:
             if self.current_direction == 'left' :
                 if choice == 2:
                     self.current_direction = 'right'  
@@ -70,7 +66,7 @@ class FuckBot420 ( TankPrototype ):
                     self.current_direction = 'right'
                 else:
                     self.current_direction = 'left'
-                
+    
         self.move(self.current_direction)
         
         enemy_list = self.getEnemyList()
