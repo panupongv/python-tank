@@ -107,6 +107,9 @@ class TankPrototype (pygame.sprite.Sprite):
         if ratio >= 1 :
             self.__is_moving = False
             
+    def __getTankInfoList(self):
+        return self.__game.getTankInfoList()    
+            
     def __hidden_update(self):
         self.__move_cooldown -= 1 / FPS
         self.__shoot_cooldown -= 1 / FPS
@@ -164,7 +167,7 @@ class TankPrototype (pygame.sprite.Sprite):
         else :
             raise ValueError('unknown direction given : ' + str(direction))
         
-        for tank in self.getTankInfoList() :
+        for tank in self.__getTankInfoList() :
             if not tank.isMySelf(self) :
                 tx, ty = tank.getPosition()
                 if tx == next_x and ty == next_y :
@@ -208,9 +211,6 @@ class TankPrototype (pygame.sprite.Sprite):
     def isMoving(self):
         return self.__is_moving
     
-    def __getTankInfoList(self):
-        return self.__game.getTankInfoList()
-    
     def isAtEdge(self, direction):
         if direction == 'left' and self.__grid_x == 0 :
             return True
@@ -242,7 +242,7 @@ class TankPrototype (pygame.sprite.Sprite):
         else :
             raise
         
-        for t in self.getTankInfoList() :
+        for t in self.__getTankInfoList() :
             tx, ty = t.getPosition()
             if not t.isMySelf(self) :
                 if mx == tx and my == ty :
