@@ -69,12 +69,12 @@ class BotEit ( TankPrototype ):
         #code your algorithm here and it will effect your tank action
 
         self.x, self.y = self.getPosition()        
-        '''change direction when this tank is at the edge of the battle field'''
-        if self.isAtEdge(self.current_direction) :
-            if self.current_direction == 'left' :
-                self.current_direction = 'right'
-            elif self.current_direction == 'right' :
-                self.current_direction = 'left'
+##        '''change direction when this tank is at the edge of the battle field'''
+##        if self.isAtEdge(self.current_direction) :
+##            if self.current_direction == 'left' :
+##                self.current_direction = 'right'
+##            elif self.current_direction == 'right' :
+##                self.current_direction = 'left'
                 
         '''then move it to the determined direction'''
         self.move(self.current_direction)
