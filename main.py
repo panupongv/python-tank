@@ -23,7 +23,9 @@ class Game:
         self.sprite_list = pygame.sprite.Group()
         self.tank_list = pygame.sprite.Group()
         self.bullet_list = pygame.sprite.Group()
-        
+
+        self.__timeleft = MATCH_TIME
+
         tank_tawan = BotTawan(self, 'tawan', 'green', 0, 0, 'right', self.sprite_list, self.tank_list)
         tank_most = FuckBot420(self, 'fuck bot 420', "red", 9, 0, "up", self.sprite_list, self.tank_list)
         tank_guy = BotGuy(self, 'guy', "red", 0, 9, "down", self.sprite_list, self.tank_list)
@@ -61,7 +63,8 @@ class Game:
             if tank.getTeamColor() == team_color:
                 return False
         return True
-    
+
+
     def main(self):
         winner = ""
         while True:
@@ -86,5 +89,8 @@ class Game:
             self.sprite_list.update()
             self.processEvents()
             self.clock.tick(FPS)
+            self.__timeleft -= (1 / FPS)
+
+
 
 Game().main()
