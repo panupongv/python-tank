@@ -11,6 +11,17 @@ from core.namedisplay import TimeDisplay
 
 class Game:
     def __init__(self):
+        self.prepare_game()
+        
+        tank_tawan = BotSampleA(self, 'sample A', 'green', 1, 1, 'right', self.sprite_list, self.tank_list)
+        tank_eit   = BotSampleB(self, 'sample B', "green", 8, 8, "left", self.sprite_list, self.tank_list)
+        tank_most  = BotA(self, 'A', "red", 8, 1, "up", self.sprite_list, self.tank_list)
+        tank_guy   = BotB(self, 'B', "red", 1, 8, "down", self.sprite_list, self.tank_list)
+
+    
+        self.__tank_info_list = [ TankInfo(tank) for tank in self.tank_list ]
+
+    def prepare_game(self):
         pygame.init()
         pygame.display.set_caption("Tank game")
         pygame.mixer.init()
@@ -28,14 +39,7 @@ class Game:
 
         self.timeleft = MATCH_TIME
         self.__timeleftdisplay = TimeDisplay("...",TIME_LABLE_SIZE)
-
-        tank_tawan = BotSampleA(self, 'sample A', 'green', 1, 1, 'right', self.sprite_list, self.tank_list)
-        tank_most = BotA(self, 'A', "red", 8, 1, "up", self.sprite_list, self.tank_list)
-        tank_guy = BotB(self, 'B', "red", 1, 8, "down", self.sprite_list, self.tank_list)
-        tank_eit = BotSampleB(self, 'sample B', "green", 8, 8, "left", self.sprite_list, self.tank_list)
-    
-        self.__tank_info_list = [ TankInfo(tank) for tank in self.tank_list ]
-
+        
     def add_hidden_update(self, func):
         try :
             a = type(self.__hidden_update_list)
