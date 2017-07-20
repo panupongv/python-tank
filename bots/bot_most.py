@@ -29,44 +29,43 @@ class FuckBot420 ( TankPrototype ):
         #this method will be call at the beginning once
         #use this to initialize variable you will use in your tank algorithm
         self.current_direction = 'left'
-        self.half = 4
     
     def update( self ) :
         #this method will be called every millisecond
         #code your algorithm here and it will effect your tank action
         self_x, self_y = self.getPosition()
         
-        choice = random.randint(0, 1)
+        choice = random.randint(0, 3)
         '''change direction when this tank is at the edge of the battle field'''
-        if self.isAtEdge(self.current_direction) :
+        if self.isAtEdge(self.current_direction) or choice == 3 :
             if self.current_direction == 'left' :
-                if choice:
+                if choice == 2:
                     self.current_direction = 'right'  
-                elif self_y <= self.half:
+                elif choice == 1:
                     self.current_direction = 'down'
                 else:
                     self.current_direction = 'up'
                     
             elif self.current_direction == 'right' :
-                if choice:
+                if choice == 2:
                     self.current_direction = 'left'  
-                elif self_y <= self.half:
+                elif choice == 1:
                     self.current_direction = 'down'
                 else:
                     self.current_direction = 'up'
                     
             elif self.current_direction == 'up' :
-                if choice:
+                if choice == 2:
                     self.current_direction = 'down'  
-                elif self_x <= self.half:
+                elif choice == 1:
                     self.current_direction = 'right'
                 else:
                     self.current_direction = 'left'
                     
             elif self.current_direction == 'down' :
-                if choice:
+                if choice == 2:
                     self.current_direction = 'up'  
-                elif self_x <= self.half:
+                elif choice == 1:
                     self.current_direction = 'right'
                 else:
                     self.current_direction = 'left'
