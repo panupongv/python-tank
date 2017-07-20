@@ -32,4 +32,4 @@ class BotGuy ( TankPrototype ):
     def update( self ) :
         #Op method dat will reck ya enemy
         for i in self.getTankInfoList():
-            
+            pass

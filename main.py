@@ -24,7 +24,7 @@ class Game:
         
         tank_tawan = BotTawan(self, 0, 'green', 0, 0, 'right', self.sprite_list, self.tank_list)
         tank_most = FuckBot420(self, 1, "red", 9, 0, "up", self.sprite_list, self.tank_list)
-        tank_guy = BotGuy(self, 2, "red", 9, 0, "down", self.sprite_list, self.tank_list)
+        tank_guy = BotGuy(self, 2, "red", 0, 9, "down", self.sprite_list, self.tank_list)
         tank_eit = BotEit(self, 3, "green", 9, 9, "left", self.sprite_list, self.tank_list)
     
         self.__tank_info_list = [ TankInfo(tank) for tank in self.tank_list ]
