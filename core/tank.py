@@ -6,6 +6,7 @@ from core.bar import Bar
 from core.namedisplay import NameDisplay
 from time import time as current_time
 from math import pi, sin
+from random import random
 
 class TankPrototype (pygame.sprite.Sprite):
     #constructor
@@ -38,7 +39,7 @@ class TankPrototype (pygame.sprite.Sprite):
         self.__speed_y = 0
         
         self.__shoot_cooldown = SHOOT_COOLDOWN
-        self.__move_cooldown = MOVE_COOLDOWN
+        self.__move_cooldown = MOVE_COOLDOWN + random()/4
         self.__move_counter = 0
 
         game.add_hidden_update(self.__hidden_update)
@@ -64,19 +65,6 @@ class TankPrototype (pygame.sprite.Sprite):
 
     def __resetShootCooldown(self):
         self.__shoot_cooldown = SHOOT_COOLDOWN
-
-    def __clamp_grid_pos(self):
-        if self.__grid_x < 0 :
-            self.__grid_x = 0
-            
-        if self.__grid_x > 9 :
-            self.__grid_x = 9
-            
-        if self.__grid_y < 0 :
-            self.__grid_y = 0
-            
-        if self.__grid_y > 9 :
-            self.__grid_y = 9
 
     def __getIndex(self):
         if self.__direction == "left" : return 0
@@ -138,19 +126,22 @@ class TankPrototype (pygame.sprite.Sprite):
         return self.__team_color == tank.getTeamColor()
 
     def readyToMove(self):
-        return self.__move_cooldown <= 0 and not self.isMoving() and self.getMP() >= DAMAGE_BULLET_MANA_COST
+        return self.__move_cooldown <= 0 and not self.isMoving()
 
     def readyToShoot(self):
-        return self.__shoot_cooldown <= 0
+        return self.__shoot_cooldown <= 0 and self.getMP() >= DAMAGE_BULLET_MANA_COST
+    
+    def readyToHeal(self):
+        return self.__shoot_cooldown <= 0 and self.getMP() >= HEAL_BULLET_MANA_COST    
         
     def move(self, direction) :
         if not self.readyToMove() :
             return
-
-        if (direction == "left" and self.__grid_x == 0) or \
-           (direction == "right" and self.__grid_x == 9) or \
-           (direction == "up" and self.__grid_y == 0) or \
-           (direction == "down" and self.__grid_y == 9):
+        
+        if self.isAtEdge(direction) :
+            return
+        
+        if self.isBlocked(direction) :
             return
         
         next_x = self.__grid_x
@@ -166,14 +157,8 @@ class TankPrototype (pygame.sprite.Sprite):
             next_y += 1
         else :
             raise ValueError('unknown direction given : ' + str(direction))
-        
-        for tank in self.__getTankInfoList() :
-            if not tank.isMySelf(self) :
-                tx, ty = tank.getPosition()
-                if tx == next_x and ty == next_y :
-                    return
     
-        self.__direction = direction        
+        self.__direction = direction
         self.image = self.images[self.__getIndex()]    
         self.__from_grid_x = self.__grid_x
         self.__from_grid_y = self.__grid_y
@@ -223,14 +208,9 @@ class TankPrototype (pygame.sprite.Sprite):
         
         return False
     
-    def getDirection(self):
-        return self.__direction
-    
-    def canMove(self, direction) :
-        if self.isAtEdge(direction) :
-            return False
-        
+    def isBlocked(self, direction) :
         mx, my = self.getPosition()
+        
         if direction == 'left' :
             mx -= 1
         elif direction == 'right' :
@@ -242,13 +222,20 @@ class TankPrototype (pygame.sprite.Sprite):
         else :
             raise
         
-        for t in self.__getTankInfoList() :
+        for t in self.getAllyList() :
             tx, ty = t.getPosition()
-            if not t.isMySelf(self) :
-                if mx == tx and my == ty :
-                    return False
+            if mx == tx and my == ty :
+                return True
             
-        return True
+        for t in self.getEnemyList() :
+            tx, ty = t.getPosition()
+            if mx == tx and my == ty :
+                return True
+            
+        return False
+        
+    def getDirection(self):
+        return self.__direction
         
     def getAllyList( self ):
         ally_list = list()
@@ -321,8 +308,8 @@ class TankInfo :
     def getDirection(self) :
         return self.__tank.getDirection()
     
-    def canMove(self, direction) :
-        return self.__tank.canMove(direction)
+    def isBlocked(self, direction) :
+        return self.__tank.isBlocked(direction)
     
     def isDead(self) :
         return self.__tank.isDead()

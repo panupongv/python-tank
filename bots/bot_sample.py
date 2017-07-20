@@ -21,9 +21,10 @@ class BotSample ( TankPrototype ):
     getTeamColor()         get current team color
     readyToMove()          check if ready to move ( also check cooldown and mana cost )
     readyToShoot()         check if ready to shoot ( also check cooldown and mana cost )
+    readyToHeal()          check if ready to heal ( also check cooldown and mana cost )
     move(direction)        move forward in the specified direction ('left' 'right' 'up' 'down')
-    shoot(direction)       fire a bullet in the specified direction ('left' 'right' 'up' 'down') : cost ?? mana
-    shoot_heal(direction)  fire a potion in the specified direction ('left' 'right' 'up' 'down') : cost ?? mana
+    shoot(direction)       fire a bullet in the specified direction ('left' 'right' 'up' 'down') : cost 10 mana
+    shoot_heal(direction)  fire a potion in the specified direction ('left' 'right' 'up' 'down') : cost 20 mana
 
     '''
     

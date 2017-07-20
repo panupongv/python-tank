@@ -58,6 +58,7 @@ class BotMost ( TankPrototype ):
                 self.shoot(self.shoot_directions[0])
             elif self.current_x == enemy_x:
                 self.shoot(self.shoot_directions[1])
+
         
             
             
