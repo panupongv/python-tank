@@ -39,7 +39,7 @@ class TankPrototype (pygame.sprite.Sprite):
         self.__speed_y = 0
         
         self.__shoot_cooldown = SHOOT_COOLDOWN
-        self.__move_cooldown = MOVE_COOLDOWN + random()/4
+        self.__move_cooldown = MOVE_COOLDOWN #+ random()/4
         self.__move_counter = 0
 
         game.add_hidden_update(self.__hidden_update)
@@ -191,7 +191,7 @@ class TankPrototype (pygame.sprite.Sprite):
         return self.__name
 
     def getPosition(self):
-        return self.rect.x // BLOCK_SIZE, self.rect.y // BLOCK_SIZE
+        return self.__grid_x, self.__grid_y
 
     def isMoving(self):
         return self.__is_moving
