@@ -1,8 +1,9 @@
 import pygame
+from math import *
 
 from core.tank import TankPrototype
 
-class BotTawan ( TankPrototype ):
+class BotEit ( TankPrototype ):
     #because this bot class is inherited from TankPrototype class
     #this class will derive and obtain all public methods available in TankPrototype
     #the methods available for use listed below
@@ -27,34 +28,66 @@ class BotTawan ( TankPrototype ):
     def start( self ) :
         #this method will be call at the beginning once
         #use this to initialize variable you will use in your tank algorithm
-        self.current_direction = 'left'
+        self.x, self.y = self.getPosition()
+        self.cloest_enemy = None
+        
+    def move_to_tank( self, target_tank):
+        enemy_x, enemy_y = target_tank.getPosition()
+        if self.x < enemy_x:
+            self.move("right")
+        elif self.x > enemy_x:
+            self.move("left")
+        elif self.x == enemy_x:
+            if self.y < enemy_y:
+                self.move("down")
+            elif self.y > enemy_y:
+                self.move("up")
+
+    def which_is_closer( self, tank1, tank2):
+        tank1_x, tank1_y = tank1.getPosition()
+        tank2_x, tank2_y = tank2.getPosition()
+
+        distance_to_tank1 = sqrt(abs(self.x-tank1_x)**2 + abs(self.y-tank1_y)**2)
+        distance_to_tank2 = sqrt(abs(self.x-tank2_x)**2 + abs(self.y-tank2_y)**2)
+
+        if distance_to_tank1 < distance_to_tank2:
+            return tank1
+        else:
+            return tank2
+        
+    def set_closet_enemy( self, enemy_list ):
+        for enemy in enemy_list:
+            if self.cloest_enemy == None:
+                self.cloest_enemy = enemy
+                continue
+            self.cloest_enemy = self.which_is_closer(enemy,self.cloest_enemy)
+            
+        
     
     def update( self ) :
         #this method will be called every millisecond
         #code your algorithm here and it will effect your tank action
-        
-        '''change direction when this tank is at the edge of the battle field'''
-        if self.isAtEdge(self.current_direction) or self.isBlocked(self.current_direction) :
-            if self.current_direction == 'left' :
-                self.current_direction = 'right'
-            elif self.current_direction == 'right' :
-                self.current_direction = 'left'
-                
-        '''then move it to the determined direction'''
-        self.move(self.current_direction)
+
+        self.x, self.y = self.getPosition()
         
         '''the info list obtained is mixed with ally and enemy ( including yourself )'''
         '''it is not a bad idea to classify it first'''
+        ally_list = self.getAllyList()
         enemy_list = self.getEnemyList()
                 
-        '''then we check where the enemies are and shoot them'''
-        for enemy in enemy_list :
-            self_x, self_y = self.getPosition()
-            enemy_x, enemy_y = enemy.getPosition()
-            
-            if self_x == enemy_x :      #if on the same column
-                if enemy_y < self_y :   #enemy is located above
-                    self.shoot('up')
-                else :                  #enemy is located below
-                    self.shoot('down')
-  
+        self.set_closet_enemy(enemy_list)
+        self.move_to_tank(self.cloest_enemy)
+        cloest_x,cloest_y = self.cloest_enemy.getPosition()
+        if self.x == cloest_x :      
+            if self.y > cloest_y :   #enemy is located above
+                self.shoot('up')
+            else :                  #enemy is located below
+                self.shoot('down')
+        
+        
+        if self.y == cloest_y:
+            if self.x > cloest_x:
+                self.shoot('left')
+            else:
+                self.shoot('right')
+                
